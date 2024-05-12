@@ -1,11 +1,5 @@
 package model;
 
-import java.time.Month;
-import java.time.Year;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.TimeZone;
-
 public class Person {
 
     private String cpf;
@@ -42,7 +36,18 @@ public class Person {
         this.country = country;
         this.address = address;
         this.number_address = number_address;
-
-
     }
+    public String getCpf(){return this.cpf;}
+    public String getFirst_name(){return this.first_name;}
+    public String getEmail(){return this.email;}
+    public String getPassword_email(){return this.password_email;}
+    public int getType_person(){return this.type_person;}
+    public String getLast_name(){return this.last_name;}
+    public String getBirthdate(){return this.birthdate;}
+    public String getCellphone(){return this.cellphone;}
+    public String getCity(){return this.city;}
+    public String getState(){return this.state;}
+    public String getCountry(){return this.country;}
+    public String getAdress(){return this.address;}
+    public int getNumber_address(){return this.number_address;}
 }
