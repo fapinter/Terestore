@@ -17,6 +17,7 @@ public class Main {
 
 
             pDAO.removePerson(email, 3);
+            System.out.println("rodou");
             //pDAO.insertPerson(p1, 3);
 
         }
