@@ -38,6 +38,40 @@ public class PersonDAO {
         return this.rs;
     }
 
+    public void removePerson(String email, int type_person){
+        this.query = "DELETE FROM person WHERE email = ? AND  type_person = ?";
+
+        try{
+            this.ps = conexao.getConnection().prepareStatement(this.query);
+            this.ps.setString(1,email);
+            this.ps.setInt(2,type_person);
+            this.ps.executeUpdate();
+            this.ps.close();
+        }
+        catch(SQLException ex){ex.printStackTrace();}
+    }
+
+
+    public int login(String email, String senha){
+        int type_person = 0;
+        this.query = "SELECT * FROM person WHERE email = ? AND password_email = ?";
+        try{
+            this.ps = conexao.getConnection().prepareStatement(this.query);
+            this.ps.setString(1,email);
+            this.ps.setString(2,senha);
+            this.rs = this.ps.executeQuery();
+
+            if ( !this.rs.next()){System.out.println("Login ou senha incorretos");}
+
+            else{type_person = rs.getInt("type_person");}
+        }
+        catch(SQLException ex){
+            ex.printStackTrace();
+        }
+        return type_person;
+    }
+
+
     public void valuesQuery(Person p, int type_person){
         try{
             this.ps.setString(1,p.getCpf());
@@ -55,24 +89,5 @@ public class PersonDAO {
             this.ps.setInt(13,p.getNumber_address());
         }
         catch(SQLException ex){ex.printStackTrace();}
-    }
-    public int login(String email, String senha){
-        int type_person = 0;
-        this.query = "SELECT * FROM person WHERE email = ? AND senha = ?";
-        try{
-            this.ps = conexao.getConnection().prepareStatement(this.query);
-            this.ps.setString(1,email);
-            this.ps.setString(2,senha);
-            this.rs = this.ps.executeQuery();
-            if ( !this.rs.next()){
-                System.out.println("Login ou senha incorretos");
-                type_person = -1;
-            }
-            else{type_person = rs.getInt("type_person");}
-        }
-        catch(SQLException ex){
-            ex.printStackTrace();
-        }
-        return type_person;
     }
 }

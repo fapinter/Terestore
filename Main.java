@@ -8,29 +8,17 @@ public class Main {
         PersonDAO pDAO = new PersonDAO();
         int type_menu = 0;
         boolean initialMenu = true;
-        while(initialMenu){
-
+        while(initialMenu) {
+            Person p1 = new Person("25632763064", "Amilton", "amiltonasci@gmail.com", "1234",3,"Nascimento", "2002-04-21",
+                    "41994572302", "Curitiba", "Paraná", "Brasil", "Rua Desembargador Motta", 324);
             Scanner sc = new Scanner(System.in);
-            System.out.print("Digite seu Email: ");
-            String usuario = sc.nextLine();
-            System.out.print("Digite a sua senha: ");
-            String senha = sc.nextLine();
-            type_menu = pDAO.login(usuario,senha);
-            if (type_menu == 1){
-                initialMenu = false;
-                System.out.println("Bem vindo admin");
+            System.out.println("Digite o email para remover");
+            String email = sc.nextLine();
 
-            }
-            else if (type_menu == 2) {
-                initialMenu = false;
-                System.out.println("Bem vindo Vendedor");
-            }
-        }
-        switch (type_menu){
+
+            pDAO.removePerson(email, 3);
+            //pDAO.insertPerson(p1, 3);
 
         }
-
-
-
     }
 }
