@@ -12,7 +12,7 @@ public class Conexao {
     private Connection conn;
     private Conexao(){
         this.bdUsuario = "root";
-        this.bdSenha = "root";
+        this.bdSenha = "17ga";
         this.bdHost = "jdbc:mysql://127.0.0.1:3306/terestore?useSSL=false";
 
         try {

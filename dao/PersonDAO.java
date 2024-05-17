@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import model.Person;
+import java.util.Scanner;
 public class PersonDAO {
 
     private Conexao conexao;
@@ -107,6 +108,174 @@ public class PersonDAO {
         }
         catch(SQLException ex){ex.printStackTrace();}
     }
+
+    public void editPersonCpf(String newCpf, String cpf) {
+        String query = "UPDATE person SET cpf = ? WHERE cpf = ?";
+        PreparedStatement ps = null;
+
+        try {
+            ps = conexao.getConnection().prepareStatement(query);
+            ps.setString(1, newCpf);
+            ps.setString(2, cpf);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public void editPersonName(String newName, String cpf) {
+        String query = "UPDATE person SET first_name = ? WHERE cpf = ?";
+        PreparedStatement ps = null;
+
+        try {
+            ps = conexao.getConnection().prepareStatement(query);
+            ps.setString(1, newName);
+            ps.setString(2, cpf);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public void editPersonEmail(String newEmail, String cpf) {
+        String query = "UPDATE person SET email = ? WHERE cpf = ?";
+        PreparedStatement ps = null;
+
+        try {
+            ps = conexao.getConnection().prepareStatement(query);
+            ps.setString(1, newEmail);
+            ps.setString(2, cpf);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public void editPersonPassword(String newPassword, String cpf) {
+        String query = "UPDATE person SET password_email = ? WHERE cpf = ?";
+        PreparedStatement ps = null;
+
+        try {
+            ps = conexao.getConnection().prepareStatement(query);
+            ps.setString(1, newPassword);
+            ps.setString(2, cpf);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public void editPersonType(String newType, String cpf) {
+        String query = "UPDATE person SET type_person = ? WHERE cpf = ?";
+        PreparedStatement ps = null;
+
+        try {
+            ps = conexao.getConnection().prepareStatement(query);
+            ps.setString(1, newType);
+            ps.setString(2, cpf);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public void allAttPerson() {
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("O que você quer atualizar na tabela person?");
+            System.out.println("1. CPF");
+            System.out.println("2. Nome");
+            System.out.println("3. Email");
+            System.out.println("4. Senha");
+            System.out.println("5. Tipo");
+            System.out.println("6. Sair");
+            System.out.print("Digite o número correspondente à sua escolha: ");
+
+            int choice = scanner.nextInt();
+            scanner.nextLine();  // Consome a nova linha
+
+            if (choice == 6) {
+                break;
+            }
+
+            System.out.print("Digite o CPF da pessoa que deseja atualizar: ");
+            String cpf = scanner.nextLine();
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Digite o novo CPF: ");
+                    String newCpf = scanner.nextLine();
+                    editPersonCpf(newCpf, cpf);
+                    break;
+                case 2:
+                    System.out.print("Digite o novo nome: ");
+                    String newName = scanner.nextLine();
+                    editPersonName(newName, cpf);
+                    break;
+                case 3:
+                    System.out.print("Digite o novo email: ");
+                    String newEmail = scanner.nextLine();
+                    editPersonEmail(newEmail, cpf);
+                    break;
+                case 4:
+                    System.out.print("Digite a nova senha: ");
+                    String newPassword = scanner.nextLine();
+                    editPersonPassword(newPassword, cpf);
+                    break;
+                case 5:
+                    System.out.print("Digite o novo tipo: ");
+                    String newType = scanner.nextLine();
+                    editPersonType(newType, cpf);
+                    break;
+                default:
+                    System.out.println("Escolha inválida.");
+            }
+        }
+
+        scanner.close();
+    }
+
 
 
     public void valuesQuery(Person p, int type_person){
