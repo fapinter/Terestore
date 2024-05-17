@@ -61,7 +61,7 @@ public class SupplierDAO {
         return this.rs;
     }
 
-    public void editPersonString(String prev_value, String value, String COLUMN){
+    public void editSupplierString(String prev_value, String value, String COLUMN){
         this.query = "UPDATE supplier SET ?=? WHERE ?=?";
         try{
             this.ps = conexao.getConnection().prepareStatement(this.query);
@@ -75,14 +75,12 @@ public class SupplierDAO {
         }
         catch(SQLException ex){ex.printStackTrace();}
     }
-    public void editPersonInt(int prev_value, int value, String COLUMN){
-        this.query = "UPDATE supplier SET ?=? WHERE ?=?";
+    public void editSupplierInt(int prev_value, int value){
+        this.query = "UPDATE supplier SET number_address=? WHERE number_address=?";
         try{
             this.ps = conexao.getConnection().prepareStatement(this.query);
-            this.ps.setString(1,COLUMN);
-            this.ps.setInt(2,value);
-            this.ps.setString(3,COLUMN);
-            this.ps.setInt(4,prev_value);
+            this.ps.setInt(1,value);
+            this.ps.setInt(2,prev_value);
             this.ps.executeUpdate();
             this.ps.close();
         }
