@@ -61,32 +61,41 @@ public class SupplierDAO {
         return this.rs;
     }
 
-    public void editSupplierString(String prev_value, String value, String COLUMN){
-        this.query = "UPDATE supplier SET ?=? WHERE ?=?";
+    public void editSupplierString(String cnpj, String value, int COLUMN){
+        if(COLUMN == 1){this.query = "UPDATE supplier SET cnpj= ? WHERE cnpj=?";}
+        else if (COLUMN == 2){this.query = "UPDATE supplier SET company_name= ? WHERE cnpj=?";}
+        else if (COLUMN == 3){this.query = "UPDATE supplier SET name_person= ? WHERE cnpj=?";}
+        else if (COLUMN == 4){this.query = "UPDATE supplier SET email= ? WHERE cnpj=?";}
+        else if (COLUMN == 5){this.query = "UPDATE supplier SET password_email= ? WHERE cnpj=?";}
+        else if (COLUMN == 6){this.query = "UPDATE supplier SET phone_number= ? WHERE cnpj=?";}
+        else if (COLUMN == 7){this.query = "UPDATE supplier SET city= ? WHERE cnpj=?";}
+        else if (COLUMN == 8){this.query = "UPDATE supplier SET state= ? WHERE cnpj=?";}
+        else if (COLUMN == 9){this.query = "UPDATE supplier SET country= ? WHERE cnpj=?";}
+        else if (COLUMN == 10){this.query = "UPDATE supplier SET address= ? WHERE cnpj=?";}
+        else{
+            System.out.println("Coluna nao identificada");
+            return;
+        }
         try{
             this.ps = conexao.getConnection().prepareStatement(this.query);
-            this.ps.setString(1,COLUMN);
-            this.ps.setString(2,value);
-            this.ps.setString(3,COLUMN);
-            this.ps.setString(4,prev_value);
+            this.ps.setString(1,value);
+            this.ps.setString(2,cnpj);
             this.ps.executeUpdate();
             this.ps.close();
-
         }
         catch(SQLException ex){ex.printStackTrace();}
     }
-    public void editSupplierInt(int prev_value, int value){
-        this.query = "UPDATE supplier SET number_address=? WHERE number_address=?";
+    public void editSupplierInt(String cnpj, int value){
+        this.query = "UPDATE supplier SET number_address = ? WHERE cnpj = ?";
         try{
             this.ps = conexao.getConnection().prepareStatement(this.query);
             this.ps.setInt(1,value);
-            this.ps.setInt(2,prev_value);
+            this.ps.setString(2,cnpj);
             this.ps.executeUpdate();
             this.ps.close();
         }
         catch(SQLException ex){ex.printStackTrace();}
     }
-
 
     public void valuesQuery(Supplier sp){
         try{

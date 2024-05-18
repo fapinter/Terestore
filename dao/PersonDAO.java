@@ -250,15 +250,16 @@ public class PersonDAO {
     }
 
     public void editPersonString(String CPF, String value, int COLUMN){
-        if (COLUMN == 1){this.query = "UPDATE person SET first_name=? WHERE email = ?";}
-        else if (COLUMN == 2){this.query = "UPDATE person SET email=? WHERE email = ?";}
-        else if (COLUMN == 3){this.query = "UPDATE person SET password_email=? WHERE email = ?";}
-        else if (COLUMN == 4){this.query = "UPDATE person SET last_name=? WHERE email = ?";}
-        else if (COLUMN == 5){this.query = "UPDATE person SET cellphone=? WHERE email = ?";}
-        else if (COLUMN == 6){this.query = "UPDATE person SET city=? WHERE email = ?";}
-        else if (COLUMN == 7){this.query = "UPDATE person SET state=? WHERE email = ?";}
-        else if (COLUMN == 8){this.query = "UPDATE person SET country=? WHERE email = ?";}
-        else if (COLUMN == 9){this.query = "UPDATE person SET address=? WHERE email = ?";}
+        if      (COLUMN == 1){this.query = "UPDATE person SET cpf=? WHERE cpf = ?";}
+        else if (COLUMN == 2){this.query = "UPDATE person SET first_name=? WHERE cpf = ?";}
+        else if (COLUMN == 3){this.query = "UPDATE person SET email=? WHERE cpf = ?";}
+        else if (COLUMN == 4){this.query = "UPDATE person SET password_email=? WHERE cpf = ?";}
+        else if (COLUMN == 5){this.query = "UPDATE person SET last_name=? WHERE cpf = ?";}
+        else if (COLUMN == 6){this.query = "UPDATE person SET cellphone=? WHERE cpf = ?";}
+        else if (COLUMN == 7){this.query = "UPDATE person SET city=? WHERE cpf = ?";}
+        else if (COLUMN == 8){this.query = "UPDATE person SET state=? WHERE cpf = ?";}
+        else if (COLUMN == 9){this.query = "UPDATE person SET country=? WHERE cpf = ?";}
+        else if (COLUMN == 10){this.query = "UPDATE person SET address=? WHERE cpf = ?";}
         else{
             System.out.println("Coluna não identificada");
             return;
