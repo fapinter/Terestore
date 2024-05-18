@@ -81,33 +81,6 @@ public class PersonDAO {
         catch(SQLException ex){ex.printStackTrace();}
         return this.rs;
     }
-    public void editPersonString(String prev_value, String value, String COLUMN){
-        this.query = "UPDATE person SET ?=? WHERE ?=?";
-        try{
-            this.ps = conexao.getConnection().prepareStatement(this.query);
-            this.ps.setString(1,COLUMN);
-            this.ps.setString(2,value);
-            this.ps.setString(3,COLUMN);
-            this.ps.setString(4,prev_value);
-            this.ps.executeUpdate();
-            this.ps.close();
-
-        }
-        catch(SQLException ex){ex.printStackTrace();}
-    }
-    public void editPersonInt(int prev_value, int value, String COLUMN){
-        this.query = "UPDATE person SET ?=? WHERE ?=?";
-        try{
-            this.ps = conexao.getConnection().prepareStatement(this.query);
-            this.ps.setString(1,COLUMN);
-            this.ps.setInt(2,value);
-            this.ps.setString(3,COLUMN);
-            this.ps.setInt(4,prev_value);
-            this.ps.executeUpdate();
-            this.ps.close();
-        }
-        catch(SQLException ex){ex.printStackTrace();}
-    }
 
     public void editPersonCpf(String newCpf, String cpf) {
         String query = "UPDATE person SET cpf = ? WHERE cpf = ?";
@@ -276,7 +249,53 @@ public class PersonDAO {
         scanner.close();
     }
 
+    public void editPersonString(String CPF, String value, int COLUMN){
+        if (COLUMN == 1){this.query = "UPDATE person SET first_name=? WHERE email = ?";}
+        else if (COLUMN == 2){this.query = "UPDATE person SET email=? WHERE email = ?";}
+        else if (COLUMN == 3){this.query = "UPDATE person SET password_email=? WHERE email = ?";}
+        else if (COLUMN == 4){this.query = "UPDATE person SET last_name=? WHERE email = ?";}
+        else if (COLUMN == 5){this.query = "UPDATE person SET cellphone=? WHERE email = ?";}
+        else if (COLUMN == 6){this.query = "UPDATE person SET city=? WHERE email = ?";}
+        else if (COLUMN == 7){this.query = "UPDATE person SET state=? WHERE email = ?";}
+        else if (COLUMN == 8){this.query = "UPDATE person SET country=? WHERE email = ?";}
+        else if (COLUMN == 9){this.query = "UPDATE person SET address=? WHERE email = ?";}
+        else{
+            System.out.println("Coluna não identificada");
+            return;
+        }
 
+        try{
+            this.ps = conexao.getConnection().prepareStatement(this.query);
+            this.ps.setString(1,value);
+            this.ps.setString(2,CPF);
+            this.ps.executeUpdate();
+            this.ps.close();
+        } catch(SQLException ex){ex.printStackTrace();}
+    }
+    public void editPersonInt(String CPF, int value, int COLUMN){
+        if (COLUMN == 1){this.query = "UPDATE person SET type_person= ? WHERE cpf=?";}
+        else if (COLUMN == 2){this.query = "UPDATE person SET number_address= ? WHERE cpf=?";}
+        else{
+            System.out.println("Coluna não identificada");
+        }
+        try{
+            this.ps = conexao.getConnection().prepareStatement(this.query);
+            this.ps.setInt(1,value);
+            this.ps.setString(2,CPF);
+            this.ps.executeUpdate();
+            this.ps.close();
+        } catch(SQLException ex){ex.printStackTrace();}
+    }
+    public void editPersonDate(String CPF, String value){
+        this.query = "UPDATE person SET birthdate= ? WHERE cpf = ?";
+        try{
+            this.ps = conexao.getConnection().prepareStatement(this.query);
+            this.ps.setDate(1,Date.valueOf(value));
+            this.ps.setString(2,CPF);
+            this.ps.executeUpdate();
+            this.ps.close();
+        } catch(SQLException ex){ex.printStackTrace();}
+    }
 
     public void valuesQuery(Person p, int type_person){
         try{

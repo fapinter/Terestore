@@ -22,6 +22,7 @@ public class Main {
         //System.out.println("Digite o email para remover");
         //String email = sc.nextLine();
 
+
         ResultSet rs = sDAO.listSupplier();
         try{
             int i = 1;
