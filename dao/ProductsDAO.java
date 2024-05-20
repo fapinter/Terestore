@@ -39,4 +39,114 @@ public class ProductsDAO {
 
         return this.rs;
     }
+
+    public void editProductName(String newName,int id ) {
+        String query = "UPDATE products SET name_product = ? WHERE id = ?";
+        PreparedStatement ps = null;
+
+        try {
+            ps = conexao.getConnection().prepareStatement(query);
+            ps.setString(1, newName);
+            ps.setInt(2, id);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+    public void editProductDescription(String newDescripition,int id ) {
+        String query = "UPDATE products SET description_product = ? WHERE id = ?";
+        PreparedStatement ps = null;
+
+        try {
+            ps = conexao.getConnection().prepareStatement(query);
+            ps.setString(1, newDescripition);
+            ps.setInt(2, id);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public void editProductPrice(double newPrice,int id ) {
+        String query = "UPDATE products SET price = ? WHERE id = ?";
+        PreparedStatement ps = null;
+
+        try {
+            ps = conexao.getConnection().prepareStatement(query);
+            ps.setDouble(1, newPrice);
+            ps.setInt(2, id);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public void editProductQuantity(int newPrice,int id ) {
+        String query = "UPDATE products SET quantity = ? WHERE id = ?";
+        PreparedStatement ps = null;
+
+        try {
+            ps = conexao.getConnection().prepareStatement(query);
+            ps.setInt(1, newPrice);
+            ps.setInt(2, id);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public void editProductSuplierName(String newSupName,int id ) {
+        String query = "UPDATE products SET quantity = ? WHERE id = ?";
+        PreparedStatement ps = null;
+
+        try {
+            ps = conexao.getConnection().prepareStatement(query);
+            ps.setString(1, newSupName);
+            ps.setInt(2, id);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
 }

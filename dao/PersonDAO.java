@@ -72,7 +72,7 @@ public class PersonDAO {
         return type_person;
     }
     public ResultSet getPerson(String email){
-        this.query = "SELECT * FROM person WHERE email=?";
+        this.query = "SELECT * FROM person WHERE cpf=?";
         try{
             this.ps = conexao.getConnection().prepareStatement(this.query);
             this.ps.setString(1,email);
