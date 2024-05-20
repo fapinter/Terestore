@@ -40,51 +40,26 @@ public class ProductsDAO {
         return this.rs;
     }
 
-    public void editProductName(String newName,int id ) {
-        String query = "UPDATE products SET name_product = ? WHERE id = ?";
-        PreparedStatement ps = null;
-
-        try {
-            ps = conexao.getConnection().prepareStatement(query);
-            ps.setString(1, newName);
-            ps.setInt(2, id);
-            ps.executeUpdate();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        } finally {
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
+    public void editProductsString(int id, String value, int COLUMN){
+        if(COLUMN == 1){this.query = "UPDATE products SET name_product = ? WHERE id = ?";}
+        else if (COLUMN == 2){this.query = "UPDATE products SET description_product = ? WHERE id = ?";}
+        else if (COLUMN == 3){this.query = "UPDATE products SET name_supplier = ? WHERE id = ?";}
+        else{
+            System.out.println("Coluna nao identificada");
+            return;
         }
-    }
-    public void editProductDescription(String newDescripition,int id ) {
-        String query = "UPDATE products SET description_product = ? WHERE id = ?";
-        PreparedStatement ps = null;
-
-        try {
-            ps = conexao.getConnection().prepareStatement(query);
-            ps.setString(1, newDescripition);
-            ps.setInt(2, id);
-            ps.executeUpdate();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        } finally {
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
+        try{
+            this.ps = conexao.getConnection().prepareStatement(this.query);
+            this.ps.setString(1,value);
+            this.ps.setInt(2,id);
+            this.ps.executeUpdate();
+            this.ps.close();
         }
+        catch(SQLException ex){ex.printStackTrace();}
     }
 
-    public void editProductPrice(double newPrice,int id ) {
-        String query = "UPDATE products SET price = ? WHERE id = ?";
+    public void editProductsPrice(double newPrice, int id) {
+        String query = "UPDATE person SET price = ? WHERE id = ?";
         PreparedStatement ps = null;
 
         try {
@@ -105,35 +80,13 @@ public class ProductsDAO {
         }
     }
 
-    public void editProductQuantity(int newPrice,int id ) {
-        String query = "UPDATE products SET quantity = ? WHERE id = ?";
+    public void editProductsQuantity(String newQuantity, int id) {
+        String query = "UPDATE person SET quantity = ? WHERE id = ?";
         PreparedStatement ps = null;
 
         try {
             ps = conexao.getConnection().prepareStatement(query);
-            ps.setInt(1, newPrice);
-            ps.setInt(2, id);
-            ps.executeUpdate();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        } finally {
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
-    public void editProductSuplierName(String newSupName,int id ) {
-        String query = "UPDATE products SET quantity = ? WHERE id = ?";
-        PreparedStatement ps = null;
-
-        try {
-            ps = conexao.getConnection().prepareStatement(query);
-            ps.setString(1, newSupName);
+            ps.setString(1, newQuantity);
             ps.setInt(2, id);
             ps.executeUpdate();
         } catch (SQLException ex) {
