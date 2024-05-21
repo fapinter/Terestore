@@ -95,9 +95,6 @@ public class SupplierDAO {
         }
         catch(SQLException ex){ex.printStackTrace();}
     }
-
-
-
     public void valuesQuery(Supplier sp){
         try{
             this.ps.setString(1,sp.getCnpj());

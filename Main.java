@@ -11,6 +11,7 @@ public class Main {
     public static void main(String args[]){
         PersonDAO pDAO = new PersonDAO();
         SupplierDAO sDAO = new SupplierDAO();
+        SalesDAO slDAO = new SalesDAO();
 
 
 
@@ -21,25 +22,26 @@ public class Main {
         //Scanner sc = new Scanner(System.in);
         //System.out.println("Digite o email para remover");
         //String email = sc.nextLine();
-
-
-        ResultSet rs = sDAO.listSupplier();
+        ResultSet rs1 = slDAO.totalOfDay("2024-05-21", "Dinheiro");
+        ResultSet rs2 = slDAO.totalOfDay("2024-05-21", "Debito");
+        double cash = 0.00;
+        double debit = 0.00;
         try{
-            int i = 1;
-            while(rs.next()){
-
-                System.out.println("*** Supplier "+ i+" ***");
-                System.out.println("Number_address : "+ rs.getString("number_address"));
-                i += 1;
+            while(rs1.next()){
+                System.out.println("Cash Total price is: "+ rs1.getDouble("total_price"));
+                cash += rs1.getDouble("total_price");
             }
+            while(rs2.next()){
+                System.out.println("Debit Total price is: "+ rs2.getDouble("total_price"));
+                debit += rs2.getDouble("total_price");
+            }
+
         }
-        catch (SQLException ex){
-            ex.printStackTrace();
-        }
+        catch(SQLException ex){ex.printStackTrace();}
+
+        System.out.println("Fechamento do dia em Dinheiro: "+ cash);
+        System.out.println("Fechamento do dia em Debito: "+ debit);
 
         System.out.println("rodou");
-
-
-
     }
 }

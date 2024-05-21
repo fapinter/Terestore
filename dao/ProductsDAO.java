@@ -5,8 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import model.Products;
 
-import javax.xml.transform.Result;
-
 public class ProductsDAO {
     private Conexao conexao;
     private String query;
@@ -25,18 +23,18 @@ public class ProductsDAO {
             this.ps.setDouble(3,p.getPrice());
             this.ps.setInt(4,p.getQuantity());
             this.ps.setString(5,p.getName_supplier());
+            this.ps.executeUpdate();
+            this.ps.close();
         }
         catch (SQLException ex){ex.printStackTrace();}
     }
     public ResultSet listProducts(){
         this.query = "SELECT * FROM products";
-
         try{
             this.ps = conexao.getConnection().prepareStatement(this.query);
             this.rs = ps.executeQuery();
         }
         catch(SQLException ex){ex.printStackTrace();}
-
         return this.rs;
     }
 
@@ -58,7 +56,7 @@ public class ProductsDAO {
         catch(SQLException ex){ex.printStackTrace();}
     }
 
-    public void editProductsPrice(double newPrice, int id) {
+    public void editProductsDouble(double newPrice, int id) {
         String query = "UPDATE person SET price = ? WHERE id = ?";
         PreparedStatement ps = null;
 
@@ -80,7 +78,7 @@ public class ProductsDAO {
         }
     }
 
-    public void editProductsQuantity(String newQuantity, int id) {
+    public void editProductsInt(String newQuantity, int id) {
         String query = "UPDATE person SET quantity = ? WHERE id = ?";
         PreparedStatement ps = null;
 
