@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Scanner;
+
 public class Person {
 
     private String cpf;
@@ -50,4 +52,5 @@ public class Person {
     public String getCountry(){return this.country;}
     public String getAdress(){return this.address;}
     public int getNumber_address(){return this.number_address;}
+
 }

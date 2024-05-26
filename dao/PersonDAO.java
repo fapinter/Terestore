@@ -14,12 +14,27 @@ public class PersonDAO {
 
     public PersonDAO(){conexao = Conexao.getConexao();}
 
-    public void insertPerson(Person p, int type_person){
+    public void insertAdmin(Person p){
+        this.query = "INSERT INTO person(cpf, first_name, email, password_email, type_person, register_date) VALUES (?,?,?,?,?, CURDATE()";
+        try{
+            this.ps = conexao.getConnection().prepareStatement(this.query);
+            this.ps.setString(1,p.getCpf());
+            this.ps.setString(2, p.getFirst_name());
+            this.ps.setString(3,p.getEmail());
+            this.ps.setString(4, p.getPassword_email());
+            this.ps.setInt(5, p.getType_person());
+            this.ps.executeUpdate();
+            this.ps.close();
+        }
+        catch(SQLException ex){ex.printStackTrace();}
+
+    }
+    public void insertPerson(Person p){
         this.query = "INSERT INTO person VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?, CURDATE())";
 
         try{
             this.ps = conexao.getConnection().prepareStatement(this.query);
-            valuesQuery(p, type_person);
+            valuesQuery(p);
             this.ps.executeUpdate();
             this.ps.close();
         }
@@ -127,13 +142,13 @@ public class PersonDAO {
         } catch(SQLException ex){ex.printStackTrace();}
     }
 
-    public void valuesQuery(Person p, int type_person){
+    public void valuesQuery(Person p){
         try{
             this.ps.setString(1,p.getCpf());
             this.ps.setString(2,p.getFirst_name());
             this.ps.setString(3,p.getEmail());
             this.ps.setString(4,p.getPassword_email());
-            this.ps.setInt(5,type_person);
+            this.ps.setInt(5,p.getType_person());
             this.ps.setString(6,p.getLast_name());
             this.ps.setDate(7, Date.valueOf(p.getBirthdate()));
             this.ps.setString(8,p.getCellphone());
