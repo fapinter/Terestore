@@ -52,7 +52,18 @@ public class PersonDAO {
         return this.rs;
     }
 
-    public void removePerson(String email, int type_person){
+    public void removeSalesman(String email, int type_person){
+        this.query = "DELETE FROM person WHERE email = ? AND type_person = ?";
+        try{
+            this.ps = conexao.getConnection().prepareStatement(this.query);
+            this.ps.setString(1, email);
+            this.ps.setInt(2,type_person);
+            this.ps.executeUpdate();
+            this.ps.close();
+        }
+        catch(SQLException ex){ex.printStackTrace();}
+    }
+    public void removeClient(String email, int type_person){
         this.query = "{call deleteClient(?, ?)}";
         try{
             this.ps = conexao.getConnection().prepareStatement(this.query);

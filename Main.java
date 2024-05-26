@@ -31,6 +31,7 @@ public class Main {
                     System.out.println("*** MENU ADMIN ***");
                     option = FirstMenu();
                     switch (option){
+                        //Pessoas
                         case 1:
                             int optionMenu = personAdmin();
                             switch(optionMenu){
@@ -84,15 +85,25 @@ public class Main {
 
                                 //Remover Vendedor
                                 case 7:
-
+                                    peDAO.removeSalesman(removePerson("vendedor"), 2);
 
                                 //Remover Cliente
                                 case 8:
+                                    peDAO.removeClient(removePerson("cliente"), 3);
 
                                 default:
                                     System.out.println("Saindo ...");
                             }
+                        //Produtos
+                        case 2:
 
+                        //Vendas
+                        case 3:
+
+                        //Fornecedor
+                        case 4:
+
+                        //Fechamento do dia
                         case 5:
                             System.out.println("Digite a data que deseja do fechamento");
                             System.out.print("no modelo YYYY-MM-DD: ");
@@ -204,6 +215,12 @@ public class Main {
         int dado = sc.nextInt();
 
     }
+    public static String removePerson(String person){
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Digite o email do "+ person+": ");
+        String email = sc.nextLine();
+        return email;
+    }
     public static int FirstMenu(){
         Scanner sc = new Scanner(System.in);
         System.out.println("1. Pessoas: ");
@@ -231,11 +248,6 @@ public class Main {
         System.out.print("Digite sua opção: ");
         option = sc.nextInt();
         return option;
-    }
-    public static void removePerson(String person){
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Digite o email do "+person+ ": ");
-
     }
 
     /*public static void menuAdmin() {
