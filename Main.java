@@ -17,33 +17,60 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         boolean login = false;
         while (!login){
+            //Login do usuario ao sistema
             System.out.print("LOGIN: ");
             String email = sc.nextLine();
             System.out.print("SENHA: ");
             String senha = sc.nextLine();
             int menu = peDAO.login(email,senha);
+
+            //Qual menu será acessado, Admin ou Vendedor
             switch (menu){
                 case 1:
-                    System.out.println("Bem vindo Admin");
-                    MenuPrincipal.menuAdmin();
+                    System.out.println("*** MENU ADMIN ***");
+                    int option = menu();
+                    switch (option){
+                        case 1:
+
+                        case 5:
+                            System.out.println("Digite a data que deseja do fechamento");
+                            System.out.print("no modelo YYYY-MM-DD: ");
+                            String date = sc.nextLine();
+                            ResultSet rs1 = saDAO.totalOfDay(date);
+                            double totalMoney = 0.00;
+                            try{
+                                while(rs1.next()){
+                                    totalMoney += rs1.getDouble("total_price");
+                                }
+                            }
+                            catch(SQLException ex){ex.printStackTrace();}
+                            System.out.println("Lucro total do dia "+date+ ": "+ totalMoney);
+
+                    }
                     login = true;
                 case 2:
-                    System.out.println("Bem vindo Vendedor");
-                    MenuPrincipal.menuSalesman();
+                    System.out.println("*** MENU VENDEDORES ***");
+                    option = menu();
                     login = true;
                 case 0:
                     System.out.println("Login ou senha incorretos");
             }
         }
     }
-}
 
-class MenuPrincipal {
-
-    private static Scanner scanner = new Scanner(System.in);
-
-    public static void menuSalesman(){}
-    public static void menuAdmin() {
+    public static int menu(){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("1. Pessoa: ");
+        System.out.println("2. Produto: ");
+        System.out.println("3. Vendas: ");
+        System.out.println("4. Fornecedor: ");
+        System.out.println("5. Fechamento do dia: ");
+        System.out.println("0. Sair");
+        System.out.print("Digite sua opção: ");
+        int optionMenu = sc.nextInt();
+        return optionMenu;
+    }
+    /*public static void menuAdmin() {
         int opcaoMenuPrincipal;
 
         do {
@@ -55,7 +82,7 @@ class MenuPrincipal {
             System.out.println("0. Sair");
             System.out.print("Digite sua opção: ");
 
-            opcaoMenuPrincipal = scanner.nextInt();
+            opcaoMenuPrincipal = sc.nextInt();
 
             switch (opcaoMenuPrincipal) {
                 case 1:
@@ -92,9 +119,10 @@ class MenuPrincipal {
         } while (opcaoMenuPrincipal != 0);
 
 
-    }
+    }*/
 
     private static void menuPessoa() {
+        Scanner scanner = new Scanner(System.in);
         int opcaoMenuPessoa;
 
         do {
@@ -131,6 +159,7 @@ class MenuPrincipal {
     }
 
     private static void menuProduto() {
+        Scanner scanner = new Scanner(System.in);
         int opcaoMenuProduto;
 
         do {
@@ -167,6 +196,7 @@ class MenuPrincipal {
     }
 
     private static void menuVenda() {
+        Scanner scanner = new Scanner(System.in);
         int opcaoMenuVenda;
 
         do {
@@ -195,6 +225,7 @@ class MenuPrincipal {
     }
 
     private static void menuFornecedor() {
+        Scanner scanner = new Scanner(System.in);
         int opcaoMenuFornecedor;
 
         do {

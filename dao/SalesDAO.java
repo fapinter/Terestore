@@ -41,12 +41,12 @@ public class SalesDAO {
         return this.rs;
     }
 
-    public ResultSet totalOfDay(String date, String payment_method){
-        this.query = "SELECT (price_product * quantity_product) as 'total_price' FROM sales WHERE sale_date =? AND payment_method =? ";
+    public ResultSet totalOfDay(String date){
+        this.query = "SELECT (price_product * quantity_product) as 'total_price' FROM sales WHERE sale_date =? AND payment_method != ? ";
         try{
             this.ps = conexao.getConnection().prepareStatement(query);
             this.ps.setString(1, date);
-            this.ps.setString(2,payment_method);
+            this.ps.setString(2, "Credito");
             this.rs = this.ps.executeQuery();
 
         }
