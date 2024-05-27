@@ -24,102 +24,217 @@ public class Main {
             System.out.print("SENHA: ");
             String senha = sc.nextLine();
             int menu = peDAO.login(email,senha);
-            int option;
+            int option = 1;
+            int optionMenu;
             //Qual menu será acessado, Admin ou Vendedor
+
             switch (menu){
                 case 1:
-                    System.out.println("*** MENU ADMIN ***");
-                    option = FirstMenu();
-                    switch (option){
-                        //Pessoas
-                        case 1:
-                            int optionMenu = personAdmin();
-                            switch(optionMenu){
-                                //Cadastrar Admin
-                                case 1:
-                                    peDAO.insertAdmin(insertAdmin());
-                                //Cadastrar Vendedor
-                                case 2:
-                                    peDAO.insertPerson(insertClientSalesman(2));
-                                //Cadastrar Cliente
-                                case 3:
-                                    peDAO.insertPerson(insertClientSalesman(3));
-                                //Listar Vendedores
-                                case 4:
-                                    rs = peDAO.listPerson(2);
-                                    try{
-                                        int i = 1;
-                                        while(rs.next()){
-                                            System.out.println("\n*** Vendedor "+i+ " ***");
-                                            System.out.println("CPF: "+ rs.getString("cpf"));
-                                            System.out.println("Nome: "+ rs.getString("first_name")+ " " + rs.getString("last_name"));
-                                            System.out.println("Email: " + rs.getString("email"));
-                                            System.out.println("Data de nascimento: "+ rs.getString("birthdate"));
-                                            System.out.println("Celular : "+ rs.getString("cellphone"));
-                                            System.out.println("Endereço: "+rs.getString("address")+ " "+ rs.getInt("number_address"));
-                                            System.out.println(rs.getString("city")+" "+ rs.getString("state")+ " "+ rs.getString("country"));
-                                            i += 1;
+                    while(option != 0) {
+                        System.out.println("*** MENU ADMIN ***");
+                        option = FirstMenu();
+                        switch (option) {
+                            //Pessoas
+                            case 1:
+                                optionMenu = personAdmin();
+                                switch (optionMenu) {
+                                    //Cadastrar Admin
+                                    case 1:
+                                        peDAO.insertAdmin(insertAdmin());
+                                        break;
+
+                                    //Cadastrar Vendedor
+                                    case 2:
+                                        peDAO.insertPerson(insertClientSalesman(2));
+                                        break;
+
+                                    //Cadastrar Cliente
+                                    case 3:
+                                        peDAO.insertPerson(insertClientSalesman(3));
+                                        break;
+                                    //Listar Vendedores
+                                    case 4:
+                                        rs = peDAO.listPerson(2);
+                                        try {
+                                            int i = 1;
+                                            while (rs.next()) {
+                                                System.out.println("\n*** Vendedor " + i + " ***");
+                                                System.out.println("CPF: " + rs.getString("cpf"));
+                                                System.out.println("Nome: " + rs.getString("first_name") + " " + rs.getString("last_name"));
+                                                System.out.println("Email: " + rs.getString("email"));
+                                                System.out.println("Data de nascimento: " + rs.getString("birthdate"));
+                                                System.out.println("Celular : " + rs.getString("cellphone"));
+                                                System.out.println("Endereço: " + rs.getString("address") + " " + rs.getInt("number_address"));
+                                                System.out.println(rs.getString("city") + " " + rs.getString("state") + " " + rs.getString("country"));
+                                                System.out.print("\n");
+                                                i += 1;
+                                            }
+                                        } catch (SQLException ex) {
+                                            ex.printStackTrace();
                                         }
-                                    }
-                                    catch(SQLException ex){ex.printStackTrace();}
-                                //Listar Clientes
-                                case 5:
-                                    rs = peDAO.listPerson(3);
-                                    try{
-                                        int i = 1;
-                                        while(rs.next()){
-                                            System.out.println("\n*** Cliente "+i+ " ***");
-                                            System.out.println("CPF: "+ rs.getString("cpf"));
-                                            System.out.println("Nome: "+ rs.getString("first_name")+ " " + rs.getString("last_name"));
-                                            System.out.println("Email: " + rs.getString("email"));
-                                            System.out.println("Data de nascimento: "+ rs.getString("birthdate"));
-                                            System.out.println("Celular : "+ rs.getString("cellphone"));
-                                            System.out.println("Endereço: "+rs.getString("address")+ " "+ rs.getInt("number_address"));
-                                            System.out.println(rs.getString("city")+" "+ rs.getString("state")+ " "+ rs.getString("country"));
-                                            i += 1;
+                                        break;
+                                    //Listar Clientes
+                                    case 5:
+                                        rs = peDAO.listPerson(3);
+                                        try {
+                                            int i = 1;
+                                            while (rs.next()) {
+                                                System.out.println("\n*** Cliente " + i + " ***");
+                                                System.out.println("CPF: " + rs.getString("cpf"));
+                                                System.out.println("Nome: " + rs.getString("first_name") + " " + rs.getString("last_name"));
+                                                System.out.println("Email: " + rs.getString("email"));
+                                                System.out.println("Data de nascimento: " + rs.getString("birthdate"));
+                                                System.out.println("Celular : " + rs.getString("cellphone"));
+                                                System.out.println("Endereço: " + rs.getString("address") + " " + rs.getInt("number_address"));
+                                                System.out.println(rs.getString("city") + " " + rs.getString("state") + " " + rs.getString("country"));
+                                                System.out.print("\n");
+                                                i += 1;
+                                            }
+                                        } catch (SQLException ex) {
+                                            ex.printStackTrace();
                                         }
-                                    }
-                                    catch(SQLException ex){ex.printStackTrace();}
-                                //Editar Cliente
-                                case 6:
+                                        break;
+                                    //Editar Cliente
+                                    case 6:
 
-                                //Remover Vendedor
-                                case 7:
-                                    peDAO.removeSalesman(removePerson("vendedor"), 2);
+                                        System.out.print("Digite o CPF do cliente para editar: ");
+                                        String cpf = sc.nextLine();
+                                        int column = editClient();
+                                        if (column == 6) {
+                                            System.out.print("Digite a data no modelo YYYY-MM-DD: ");
+                                            String date = sc.nextLine();
+                                            peDAO.editPersonDate(cpf, date, 3);
+                                        } else if (column == 12) {
+                                            System.out.print("Digite o número do endereço: ");
+                                            int num = sc.nextInt();
+                                            peDAO.editPersonInt(cpf, num, 3);
+                                        } else {
+                                            System.out.println("Digite o novo valor: ");
+                                            String string = sc.nextLine();
+                                            peDAO.editPersonString(cpf, string, column, 3);
+                                        }
+                                        break;
+                                    //Remover Vendedor
+                                    case 7:
+                                        peDAO.removeSalesman(removePerson("vendedor"), 2);
+                                        break;
 
-                                //Remover Cliente
-                                case 8:
-                                    peDAO.removeClient(removePerson("cliente"), 3);
+                                    //Remover Cliente
+                                    case 8:
+                                        peDAO.removeClient(removePerson("cliente"), 3);
+                                        break;
 
-                                default:
-                                    System.out.println("Saindo ...");
-                            }
-                        //Produtos
-                        case 2:
-
-                        //Vendas
-                        case 3:
-
-                        //Fornecedor
-                        case 4:
-
-                        //Fechamento do dia
-                        case 5:
-                            System.out.println("Digite a data que deseja do fechamento");
-                            System.out.print("no modelo YYYY-MM-DD: ");
-                            String date = sc.nextLine();
-                            ResultSet rs1 = saDAO.totalOfDay(date);
-                            double totalMoney = 0.00;
-                            try{
-                                while(rs1.next()){
-                                    totalMoney += rs1.getDouble("total_price");
+                                    case 0:
+                                        System.out.println("voltando menu... ");
+                                        break;
+                                    default:
+                                        System.out.println("Valor incorreto... ");
+                                        break;
                                 }
-                            }
-                            catch(SQLException ex){ex.printStackTrace();}
-                            System.out.println("Lucro total do dia "+date+ ": "+ totalMoney);
+                                break;
+
+                            //Produtos
+                            case 2:
+                                optionMenu = productsAdmin();
+                                switch (optionMenu) {
+                                    //Cadastrar produto
+                                    case 1:
+                                        poDAO.insertProduct(insertProduct());
+                                        break;
+
+                                    //Listar produtos
+                                    case 2:
+                                        rs = poDAO.listProducts();
+                                        try{
+
+                                            int i = 1;
+                                            while(rs.next()){
+                                                System.out.println("\n*** Produto"+i+ " ***");
+                                                System.out.println("Id: "+rs.getString("id"));
+                                                System.out.println("Nome: "+rs.getString("name_product"));
+                                                System.out.println("Descrição: "+rs.getString("description_product"));
+                                                System.out.println("Preço: "+ rs.getDouble("price"));
+                                                System.out.println("Quantidade no estoque: "+rs.getInt("quantity"));
+                                                System.out.println("Nome do fornecedor: "+rs.getString("name_supplier"));
+                                                System.out.print("\n");
+                                                i += 1;
+                                            }
+                                        }
+                                        catch(SQLException ex){ex.printStackTrace();}
+                                        break;
+
+                                    //Editar produtos
+                                    case 3:
+                                        System.out.print("Digite o id do produto que deseja editar: ");
+                                        int id = sc.nextInt();
+                                        int column = editProduct();
+                                        if(column == 3){
+                                            System.out.print("Digite o novo preço: ");
+                                            double new_value = sc.nextInt();
+                                            poDAO.editProductsDouble(new_value, id);
+                                        }
+                                        else if(column == 4){
+                                            System.out.print("Digite a nova quantidade: ");
+                                            int new_value = sc.nextInt();
+                                            poDAO.editProductsInt(new_value, id);
+                                        }
+                                        else{
+                                            System.out.print("Digite o novo valor: ");
+                                            String new_value = sc.nextLine();
+                                            poDAO.editProductsString(id,new_value,column);
+                                        }
+                                        break;
+
+                                    //Remover produto
+                                    case 4:
+                                        System.out.print("Digite o id do produto para remover: ");
+                                        int id_remove = sc.nextInt();
+                                        poDAO.removeProduct(id_remove);
+                                        break;
+
+                                    //Sair
+                                    case 0:
+                                        System.out.println("Voltando ao menu...");
+                                        break;
+
+                                    default:
+                                        System.out.println("Valor inválido...");
+                                        break;
+                                }
+                                //Vendas
+                            case 3:
+                                break;
+
+                            //Fornecedor
+                            case 4:
+                                break;
+
+                            //Fechamento do dia
+                            case 5:
+                                System.out.println("Digite a data que deseja do fechamento");
+                                System.out.print("no modelo YYYY-MM-DD: ");
+                                String date = sc.nextLine();
+                                ResultSet rs1 = saDAO.totalOfDay(date);
+                                double totalMoney = 0.00;
+                                try {
+                                    while (rs1.next()) {
+                                        totalMoney += rs1.getDouble("total_price");
+                                    }
+                                } catch (SQLException ex) {
+                                    ex.printStackTrace();
+                                }
+                                System.out.println("Lucro total do dia " + date + ": " + totalMoney);
+                                break;
+                            case 0:
+                                break;
+
+                        }
 
                     }
                     login = true;
+                    break;
+
+
                 case 2:
                     System.out.println("*** MENU VENDEDORES ***");
                     option = FirstMenu();
@@ -128,8 +243,10 @@ public class Main {
                             continue;
                     }
                     login = true;
+                    break;
                 case 0:
                     System.out.println("Login ou senha incorretos");
+                    break;
             }
         }
     }
@@ -195,10 +312,8 @@ public class Main {
 
         return new Person(cpf,first_name,email,password, type_person,last_name,birthdate,cellphone,city,state,country,address,number_address);
     }
-    public static void editClient(){
+    public static int editClient(){
         Scanner sc = new Scanner(System.in);
-        System.out.print("Digite o CPF do cliente para editar: ");
-        String cpf = sc.nextLine();
         System.out.println("*** QUAL DADO DESEJA EDITAR");
         System.out.println("1. CPF: ");
         System.out.println("2. Primeiro nome");
@@ -212,8 +327,10 @@ public class Main {
         System.out.println("10. País");
         System.out.println("11. Endereço");
         System.out.println("12. Número do endereço");
+        System.out.print("Digite sua opção: ");
         int dado = sc.nextInt();
 
+        return dado;
     }
     public static String removePerson(String person){
         Scanner sc = new Scanner(System.in);
@@ -244,214 +361,56 @@ public class Main {
         System.out.println("6. Editar CLiente: ");
         System.out.println("7. Remover Vendedor: ");
         System.out.println("8. Remover CLiente: ");
-        System.out.println("9. Sair: ");
+        System.out.println("0. Sair: ");
+        System.out.print("Digite sua opção: ");
+        option = sc.nextInt();
+        return option;
+    }
+    public static int productsAdmin(){
+        int option;
+        Scanner sc = new Scanner(System.in);
+        System.out.println("1. Cadastrar produto: ");
+        System.out.println("2. Listar produtos: ");
+        System.out.println("3. Editar produtos: ");
+        System.out.println("4. Remover produto: ");
+        System.out.println("0. Sair: ");
         System.out.print("Digite sua opção: ");
         option = sc.nextInt();
         return option;
     }
 
-    /*public static void menuAdmin() {
-        int opcaoMenuPrincipal;
-
-        do {
-            System.out.println("\nMenu Principal:");
-            System.out.println("1. Menu Pessoa");
-            System.out.println("2. Menu Produto");
-            System.out.println("3. Menu Venda");
-            System.out.println("4. Menu Fornecedor");
-            System.out.println("0. Sair");
-            System.out.print("Digite sua opção: ");
-
-            opcaoMenuPrincipal = sc.nextInt();
-
-            switch (opcaoMenuPrincipal) {
-                case 1:
-                    int opcaoMenuSecundario = secondaryMenu("Pessoa");
-                    switch(opcaoMenuSecundario){
-                        case 1:
-                            System.out.println("Inserir");
-                        case 2:
-                            System.out.println("Remove");
-                        case 3:
-                            System.out.println("List");
-                        case 4:
-                            System.out.println("Edit");
-                        case 0:
-                            System.out.println("Go back");
-                        default:
-                            System.out.println("Not found, return");
-                    }
-                case 2:
-                    secondaryMenu("Produto");
-                    break;
-                case 3:
-                    menuVenda();
-                    break;
-                case 4:
-                    secondaryMenu("Fornecedor");
-                    break;
-                case 0:
-                    System.out.println("Saindo do programa...");
-                    break;
-                default:
-                    System.out.println("Opção inválida. Tente novamente.");
-            }
-        } while (opcaoMenuPrincipal != 0);
-
-
-    }*/
-
-    private static void menuPessoa() {
-        Scanner scanner = new Scanner(System.in);
-        int opcaoMenuPessoa;
-
-        do {
-            System.out.println("\nMenu Pessoa:");
-            System.out.println("1. Inserir Pessoa");
-            System.out.println("2. Atualizar Pessoa");
-            System.out.println("3. Deletar Pessoa");
-            System.out.println("4. Consultar Pessoa");
-            System.out.println("0. Voltar ao Menu Principal");
-            System.out.print("Digite sua opção: ");
-
-            opcaoMenuPessoa = scanner.nextInt();
-
-            switch (opcaoMenuPessoa) {
-                case 1:
-                    System.out.println("insert");
-                    break;
-                case 2:
-                    System.out.println("delet");
-                    break;
-                case 3:
-                    System.out.println("update");
-                    break;
-                case 4:
-                    System.out.println("select");
-                    break;
-                case 0:
-                    System.out.println("Voltando ao Menu Principal...");
-                    break;
-                default:
-                    System.out.println("Opção inválida. Tente novamente.");
-            }
-        } while (opcaoMenuPessoa != 0);
-    }
-
-    private static void menuProduto() {
-        Scanner scanner = new Scanner(System.in);
-        int opcaoMenuProduto;
-
-        do {
-            System.out.println("\nMenu Produto:");
-            System.out.println("1. Inserir Produto");
-            System.out.println("2. Atualizar Produto");
-            System.out.println("3. Deletar Produto");
-            System.out.println("4. Consultar Produto");
-            System.out.println("0. Voltar ao Menu Principal");
-            System.out.print("Digite sua opção: ");
-
-            opcaoMenuProduto = scanner.nextInt();
-
-            switch (opcaoMenuProduto) {
-                case 1:
-                    System.out.println("insert");
-                    break;
-                case 2:
-                    System.out.println("update");
-                    break;
-                case 3:
-                    System.out.println("delet");
-                    break;
-                case 4:
-                    System.out.println("select");
-                    break;
-                case 0:
-                    System.out.println("Voltando ao Menu Principal...");
-                    break;
-                default:
-                    System.out.println("Opção inválida. Tente novamente.");
-            }
-        } while (opcaoMenuProduto != 0);
-    }
-
-    private static void menuVenda() {
-        Scanner scanner = new Scanner(System.in);
-        int opcaoMenuVenda;
-
-        do {
-            System.out.println("\nMenu Venda:");
-            System.out.println("1. Registrar Venda");
-            System.out.println("2. Consultar Venda");
-            System.out.println("0. Voltar ao Menu Principal");
-            System.out.print("Digite sua opção: ");
-
-            opcaoMenuVenda = scanner.nextInt();
-
-            switch (opcaoMenuVenda) {
-                case 1:
-                    System.out.println("registrar venda");
-                    break;
-                case 2:
-                    System.out.println("consultar venda");
-                    break;
-                case 0:
-                    System.out.println("Voltando ao Menu Principal...");
-                    break;
-                default:
-                    System.out.println("Opção inválida. Tente novamente.");
-            }
-        } while (opcaoMenuVenda != 0);
-    }
-
-    private static void menuFornecedor() {
-        Scanner scanner = new Scanner(System.in);
-        int opcaoMenuFornecedor;
-
-        do {
-            System.out.println("\nMenu Fornecedor:");
-            System.out.println("1. Inserir Fornecedor");
-            System.out.println("2. Atualizar Fornecedor");
-            System.out.println("3. Deletar Fornecedor");
-            System.out.println("4. Consultar Fornecedor");
-            System.out.println("0. Voltar ao Menu Principal");
-            System.out.print("Digite sua opção: ");
-
-            opcaoMenuFornecedor = scanner.nextInt();
-
-            switch (opcaoMenuFornecedor) {
-                case 1:
-                    System.out.println("insert");
-                    break;
-                case 2:
-                    System.out.println("update");
-                    break;
-                case 3:
-                    System.out.println("delet");
-                    break;
-                case 4:
-                    System.out.println("select");
-                    break;
-                case 0:
-                    System.out.println("Voltando ao Menu Principal...");
-                    break;
-                default:
-                    System.out.println("Opção inválida. Tente novamente.");
-            }
-        } while (opcaoMenuFornecedor != 0);
-    }
-    public static int secondaryMenu(String type_menu){
+    public static Products insertProduct(){
+        String name;
+        String description;
+        double price;
+        int quantity;
+        String name_supplier;
         Scanner sc = new Scanner(System.in);
-        int optionMenu;
-        System.out.println("Menu "+type_menu);
-        System.out.println("1. Inserir "+type_menu+": ");
-        System.out.println("2. Atualizar "+type_menu+": ");
-        System.out.println("3. Deletar "+type_menu+": ");
-        System.out.println("4. Listar "+type_menu+": ");
-        System.out.println("0. Voltar ao Menu Principal: ");
-        System.out.print("Digite a opção desejada: ");
-        optionMenu = sc.nextInt();
-        return optionMenu;
+
+        System.out.print("Digite o nome do produto: ");
+        name = sc.nextLine();
+        System.out.print("Escreva a descrição do produto: ");
+        description = sc.nextLine();
+        System.out.print("Digite o preço");
+        price = sc.nextDouble();
+        System.out.print("Digite a quantidade: ");
+        quantity = sc.nextInt();
+        System.out.print("Digite o nome do fornecedor: ");
+        name_supplier = sc.nextLine();
+        return new Products(name,description,price,quantity,name_supplier);
+    }
+    public static int editProduct(){
+        Scanner sc = new Scanner(System.in);
+        int dado;
+        System.out.println("*** QUAL DADO VOCÊ DESEJA EDITAR");
+        System.out.println("1. Nome do produto: ");
+        System.out.println("2. Descrição do produto: ");
+        System.out.println("3. Preço: ");
+        System.out.println("4. Quantidade no estoque: ");
+        System.out.println("5. Nome do fornecedor: ");
+        System.out.print("Digite sua opção: ");
+        dado = sc.nextInt();
+        return dado;
     }
 }
 

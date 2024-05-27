@@ -104,17 +104,17 @@ public class PersonDAO {
         return this.rs;
     }
 
-    public void editPersonString(String CPF, String value, int COLUMN){
-        if      (COLUMN == 1){this.query = "UPDATE person SET cpf=? WHERE cpf = ?";}
-        else if (COLUMN == 2){this.query = "UPDATE person SET first_name=? WHERE cpf = ?";}
-        else if (COLUMN == 3){this.query = "UPDATE person SET email=? WHERE cpf = ?";}
-        else if (COLUMN == 4){this.query = "UPDATE person SET password_email=? WHERE cpf = ?";}
-        else if (COLUMN == 5){this.query = "UPDATE person SET last_name=? WHERE cpf = ?";}
-        else if (COLUMN == 6){this.query = "UPDATE person SET cellphone=? WHERE cpf = ?";}
-        else if (COLUMN == 7){this.query = "UPDATE person SET city=? WHERE cpf = ?";}
-        else if (COLUMN == 8){this.query = "UPDATE person SET state=? WHERE cpf = ?";}
-        else if (COLUMN == 9){this.query = "UPDATE person SET country=? WHERE cpf = ?";}
-        else if (COLUMN == 10){this.query = "UPDATE person SET address=? WHERE cpf = ?";}
+    public void editPersonString(String CPF, String value, int COLUMN, int type_person){
+        if      (COLUMN == 1){this.query = "UPDATE person SET cpf=? WHERE cpf = ?  AND type_person=?";}
+        else if (COLUMN == 2){this.query = "UPDATE person SET first_name=? WHERE cpf = ? AND type_person=?";}
+        else if (COLUMN == 3){this.query = "UPDATE person SET email=? WHERE cpf = ? AND type_person=?";}
+        else if (COLUMN == 4){this.query = "UPDATE person SET password_email=? WHERE cpf = ? AND type_person=?";}
+        else if (COLUMN == 5){this.query = "UPDATE person SET last_name=? WHERE cpf = ? AND type_person=?";}
+        else if (COLUMN == 7){this.query = "UPDATE person SET cellphone=? WHERE cpf = ? AND type_person=?";}
+        else if (COLUMN == 8){this.query = "UPDATE person SET city=? WHERE cpf = ? AND type_person=?";}
+        else if (COLUMN == 9){this.query = "UPDATE person SET state=? WHERE cpf = ? AND type_person=?";}
+        else if (COLUMN == 10){this.query = "UPDATE person SET country=? WHERE cpf = ? AND type_person=?";}
+        else if (COLUMN == 11){this.query = "UPDATE person SET address=? WHERE cpf = ? AND type_person=?";}
         else{
             System.out.println("Coluna não identificada");
             return;
@@ -124,30 +124,29 @@ public class PersonDAO {
             this.ps = conexao.getConnection().prepareStatement(this.query);
             this.ps.setString(1,value);
             this.ps.setString(2,CPF);
+            this.ps.setInt(3, type_person);
             this.ps.executeUpdate();
             this.ps.close();
         } catch(SQLException ex){ex.printStackTrace();}
     }
-    public void editPersonInt(String CPF, int value, int COLUMN){
-        if (COLUMN == 1){this.query = "UPDATE person SET type_person= ? WHERE cpf=?";}
-        else if (COLUMN == 2){this.query = "UPDATE person SET number_address= ? WHERE cpf=?";}
-        else{
-            System.out.println("Coluna não identificada");
-        }
+    public void editPersonInt(String CPF, int value, int type_person){
+        this.query = "UPDATE person SET number_address= ? WHERE cpf=? AND type_person=?";
         try{
             this.ps = conexao.getConnection().prepareStatement(this.query);
             this.ps.setInt(1,value);
             this.ps.setString(2,CPF);
+            this.ps.setInt(3, type_person);
             this.ps.executeUpdate();
             this.ps.close();
         } catch(SQLException ex){ex.printStackTrace();}
     }
-    public void editPersonDate(String CPF, String value){
-        this.query = "UPDATE person SET birthdate= ? WHERE cpf = ?";
+    public void editPersonDate(String CPF, String value, int type_person){
+        this.query = "UPDATE person SET birthdate= ? WHERE cpf = ? AND type_person = ?";
         try{
             this.ps = conexao.getConnection().prepareStatement(this.query);
             this.ps.setDate(1,Date.valueOf(value));
             this.ps.setString(2,CPF);
+            this.ps.setInt(3,type_person);
             this.ps.executeUpdate();
             this.ps.close();
         } catch(SQLException ex){ex.printStackTrace();}

@@ -37,11 +37,21 @@ public class ProductsDAO {
         catch(SQLException ex){ex.printStackTrace();}
         return this.rs;
     }
+    public void removeProduct(int id){
+        this.query = "DELETE FROM sales WHERE id=?";
+        try{
+            this.ps = conexao.getConnection().prepareStatement(this.query);
+            this.ps.setInt(1, id);
+            this.ps.executeUpdate();
+            this.ps.close();
+        }
+        catch(SQLException ex){ex.printStackTrace();}
+    }
 
     public void editProductsString(int id, String value, int COLUMN){
         if(COLUMN == 1){this.query = "UPDATE products SET name_product = ? WHERE id = ?";}
         else if (COLUMN == 2){this.query = "UPDATE products SET description_product = ? WHERE id = ?";}
-        else if (COLUMN == 3){this.query = "UPDATE products SET name_supplier = ? WHERE id = ?";}
+        else if (COLUMN == 5){this.query = "UPDATE products SET name_supplier = ? WHERE id = ?";}
         else{
             System.out.println("Coluna nao identificada");
             return;
@@ -78,13 +88,13 @@ public class ProductsDAO {
         }
     }
 
-    public void editProductsInt(String newQuantity, int id) {
+    public void editProductsInt(int newQuantity, int id) {
         String query = "UPDATE person SET quantity = ? WHERE id = ?";
         PreparedStatement ps = null;
 
         try {
             ps = conexao.getConnection().prepareStatement(query);
-            ps.setString(1, newQuantity);
+            ps.setInt(1, newQuantity);
             ps.setInt(2, id);
             ps.executeUpdate();
         } catch (SQLException ex) {
