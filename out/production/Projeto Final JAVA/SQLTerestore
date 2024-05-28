@@ -1,0 +1,149 @@
+DROP DATABASE IF EXISTS terestore;
+CREATE DATABASE IF NOT EXISTS terestore;
+USE terestore;
+
+/* --- PERSON --- */
+CREATE TABLE IF NOT EXISTS person(
+	/*CAMPOS GENÉRICOS OBRIGATÓRIOS*/
+	cpf CHAR(11) NOT NULL,
+    first_name VARCHAR(45) NOT NULL,
+    email VARCHAR(45) NOT NULL,
+    password_email VARCHAR(45) NOT NULL,
+    type_person int NOT NULL, -- 1: admin, 2: slaesmna, 3: client
+    
+    /*CAMPOS ESPECÍFICOS, PARA CLIENT E SALESMAN*/
+    
+    last_name VARCHAR(45),
+    birthdate date,
+    cellphone CHAR(11),
+    city VARCHAR(45),
+    state VARCHAR(45),
+    country VARCHAR(45),
+    address VARCHAR(45),
+    number_address int,
+    register_date date,
+    UNIQUE(cpf),
+    PRIMARY KEY(cpf)
+); 
+
+/* --- SUPPLIER --- */
+CREATE TABLE IF NOT EXISTS supplier(
+	cnpj CHAR(14) NOT NULL,
+    company_name VARCHAR(45) NOT NULL,
+    name_person VARCHAR(45) NOT NULL,
+    email VARCHAR(45) NOT NULL,
+    password_email VARCHAR(45) NOT NULL,
+	phone_number VARCHAR(11) NOT NULL,
+    city VARCHAR(45) NOT NULL,
+    state VARCHAR(45) NOT NULL,
+    country VARCHAR(45) NOT NULL,
+    address VARCHAR(45) NOT NULL,
+    number_address int NOT NULL,
+    register_date date NOT NULL,
+    PRIMARY KEY(cnpj),
+    UNIQUE(cnpj)
+);
+
+/* --- PRODUCTS --- */
+CREATE TABLE IF NOT EXISTS products(
+	id int NOT NULL AUTO_INCREMENT,
+	name_product VARCHAR(45) NOT NULL,
+    description_product VARCHAR(70) NOT NULL,
+    price DOUBLE NOT NULL,
+    quantity INT NOT NULL,
+    name_supplier VARCHAR(45),
+    PRIMARY KEY(id),
+    UNIQUE(id)
+);
+
+/* --- SALES --- */
+CREATE TABLE IF NOT EXISTS sales(
+	id_sale INT NOT NULL,
+    name_client VARCHAR(45) NOT NULL,
+    active_client int NOT NULL, -- 1: active, 0: inactive
+    name_product VARCHAR(45) NOT NULL,
+    price_product DOUBLE NOT NULL,
+    quantity_product INT NOT NULL,
+    payment_method VARCHAR(8) NOT NULL,
+    sale_date DATE NOT NULL
+);
+
+
+/* --- INSERT DO ADMIN À TABELA PERSON --- */
+INSERT INTO person (cpf, first_name, email, password_email, type_person)
+ VALUES ("08526354000", "Guilherme", "guilhermeAdmin@pucpr.edu.br","admin_tere", 1);
+ 
+INSERT INTO person
+/* --- INSERT DOS CLIENTES À TABELA PERSON --- */
+VALUES ("25632763064", "Amilton", "amiltonasci@gmail.com", "1234",3,"Nascimento", "2002-04-21",
+		"41994572302", "Curitiba", "Paraná", "Brasil", "Rua Desembargador Motta", 324, CURDATE()),
+	   ("13137092043", "Claudio","claudiosimas@hotmail.com", "claudio123",3,"Simas", "1999-07-10",
+        "41994374372", "Curitiba", "Paraná", "Brasil", "Rua Júlia Wanderley", 210, CURDATE()),
+        
+/* --- INSERT DOS VENDEDORES À TABELA PERSON --- */
+
+		("77268574045", "Helton","helton@gmail.com", "best_seller",2,"Cordeiro", "1974-07-29",
+         "41993284290", "Curitiba", "Paraná", "Brasil", "Rua Silveira Peixoto", 380, CURDATE()),
+        ("19257076016", "Fernando","ferSov@gmail.com",  "worst_seller", 2, "Sovastin" , "2005-11-25",
+         "41943820420", "Curitiba", "Paraná", "Brasil", "Rua Brigadeiro Franco",320, CURDATE());
+
+
+/* --- INSERT DOS FORNECEDORES --- */
+INSERT INTO supplier
+VALUES  ("03254085000122", "ProdutoraMT", "Tarso Bertolini","tarsinho@outlook.com", "123456", "41992730411",
+		"Curitiba", "Paraná", "Brasil", "Rua Manoel Eufrásio", 480, CURDATE()),
+        ("89165414000184", "MTforever", "Crystofer Demetino", "crysdemn@gmail.com", "zigods", "41998656973",
+        "Araucaria", "Paraná", "Brasil", "Rua Silvio Cantele", 1595, CURDATE());
+
+
+/* --- INSERT NA TABELA PRODUCTS --- */
+INSERT INTO products (name_product, description_product, price, quantity, name_supplier)
+VALUES  ("Cuia de Tereré", "Cuia de Tereré Preto 360ml", 50, 25, "ProdutoraMT"),
+	    ("Bomba de Tereré", "Bomba de tereré EPOX preta", 15, 30, "ProdutoraMT"),
+	    ("Erva Pura Folha", "Erva de Tereré sabor Pura Folha", 27, 50, "ProdutoraMT"),
+        ("Erva com Limão", "Erva de Tereré com Limão", 29, 48, "ProdutoraMT"),
+        ("Erva tradicional", "Erva de Tereré tradicional", 27, 39, "ProdutoraMT"),
+        ("Erva burrito", "Erva de Tereré burrito", 33, 29, "ProdutoraMT"),
+        ("Erva com menta", "Erva de Tereré com menta", 32, 27, "ProdutoraMT"),
+        ("Erva menta e cereja", "Erva de Tereré com menta e cereja", 36, 39, "MTforever"),
+        ("Erva hortelã", "Erva de Tereré com Hortelã", 32, 28, "MTforever"),
+		("Galão 3,5L", "Galão para Tereré 3.5 Litros", 45, 15, "MTforever");
+
+
+/* --- INSERT NA TABELA SALES --- */
+INSERT INTO sales
+VALUES (1, "Amilton",1,"Cuia de Tereré", 50, 3, "Dinheiro",curdate()),
+	   (1, "Amilton",1,"Bomba de Tereré", 15, 1, "Dinheiro", curdate()),
+       (1, "Amilton", 1, "Erva Pura Folha", 27, 3, "Dinheiro", curdate()),
+       (2, "Claudio", 1, "Erva burrito", 33, 2, "Debito", curdate()),
+       (2, "Claudio", 1, "Galão 3,5L", 45, 1, "Debito", curdate()),
+       (3, "Amilton", 1, "Erva com menta", 32, 5, "Dinheiro", curdate()),
+       (3, "Amilton", 1, "Erva menta e cereja", 36, 6, "Dinheiro", curdate()),
+       (3, "Amilton", 1, "Erva hortelã", 32, 3, "Dinheiro", curdate()),
+       (3, "Amilton", 1, "Galão 3,5L", 45, 2, "Dinheiro", curdate()),
+       (4, "Claudio", 1, "Erva menta e cereja", 36, 2, "Credito", curdate()),
+       (4, "Claudio", 1, "Erva hortelã", 32, 2, "Credito", curdate()),
+       (5, "Amilton", 1, "Erva tradicional", 27, 2, "Debito", curdate()),
+       (5, "Amilton", 1, "Erva burrito", 33, 3, "Debito", curdate()),
+       (5, "Amilton", 1, "Erva com Limão", 29, 4, "Debito", curdate());
+  
+DROP PROCEDURE IF EXISTS deleteClient;
+DELIMITER $$
+CREATE PROCEDURE deleteClient(IN email_parameter varchar(45), type_p INT)
+BEGIN
+    
+	UPDATE sales SET active_client = 0 WHERE name_client = (SELECT first_name FROM person WHERE email = email_parameter);
+	DELETE FROM person WHERE email = email_parameter AND type_person = type_p;
+    
+END$$
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS changeProductQuantity;
+DELIMITER $$
+CREATE TRIGGER changeProductQuantity AFTER INSERT ON sales
+FOR EACH ROW
+BEGIN
+	UPDATE Products SET quantity = quantity - NEW.quantity_product WHERE name_product = NEW.name_product;
+
+END $$
+DELIMITER ; 
