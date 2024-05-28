@@ -38,22 +38,22 @@ public class SupplierDAO {
         catch(SQLException ex){ex.printStackTrace();}
         return this.rs;
     }
-    public void removeSupplier(String email){
-        this.query = "DELETE FROM supplier WHERE email=?";
+    public void removeSupplier(String cnpj){
+        this.query = "DELETE FROM supplier WHERE cnpj=?";
 
         try{
             this.ps = conexao.getConnection().prepareStatement(this.query);
-            this.ps.setString(1,email);
+            this.ps.setString(1,cnpj);
             this.ps.executeUpdate();
             this.ps.close();
         }
         catch(SQLException ex){ex.printStackTrace();}
     }
-    public ResultSet getSupplier(String email){
-        this.query = "SELECT * FROM supplier WHERE email=?";
+    public ResultSet getSupplier(String cnpj){
+        this.query = "SELECT * FROM supplier WHERE cnpj=?";
         try{
             this.ps = conexao.getConnection().prepareStatement(this.query);
-            this.ps.setString(1,email);
+            this.ps.setString(1,cnpj);
             this.rs = this.ps.executeQuery();
         }
         catch(SQLException ex){ex.printStackTrace();}

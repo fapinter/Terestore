@@ -207,8 +207,54 @@ public class Main {
 
                             //Fornecedor
                             case 4:
+                                optionMenu = supplierAdmin();
+                                switch (optionMenu) {
+                                    // insert supplier
+                                    case 1:
+                                        suDAO.insertSupplier(insertSupplier());
+                                        break;
+                                    //listar supplier
+                                    case 2:
+                                        rs = suDAO.listSupplier();
+                                        try{
+                                            int i = 1;
+                                            while(rs.next()){
+                                                System.out.println("\n*** Fornecedor " + i + " ***");
+                                                System.out.println("CNPJ: " + rs.getString("cnpj"));
+                                                System.out.println("Nome: " + rs.getString("name_person") + " " + " representando " + " " + rs.getString("company_name"));
+                                                System.out.println("Email: " + rs.getString("email"));
+                                                System.out.println("Data de Registro: " + rs.getString("register_date"));
+                                                System.out.println("Celular : " + rs.getString("phone_number"));
+                                                System.out.println("Endereço: " + rs.getString("address") + " " + rs.getInt("number_address"));
+                                                System.out.println(rs.getString("city") + " " + rs.getString("state") + " " + rs.getString("country"));
+                                                System.out.print("\n");
+                                                i += 1;
+                                            }
+                                        }catch (Exception e){
+                                            e.printStackTrace();
+                                        }
+                                    //editar supplier
+                                    case 3:
+                                        System.out.print("Digite o CPF do cliente para editar: ");
+                                        String cnpj = sc.nextLine();
+                                        int column = editSupplier();
+                                        if (column == 11) {
+                                            System.out.print("Digite o novo Numero Do Endereço: ");
+                                            int new_value = sc.nextInt();
+                                            suDAO.editSupplierInt(cnpj, new_value);
+                                        }
+                                        else{
+                                            System.out.println("Digite o novo valor a ser inserido");
+                                            String newValue = sc.nextLine();
+                                            suDAO.editSupplierString(cnpj,newValue,column);
+                                        }
+                                        break;
+                                    //remove supplier
+                                    case 4:
+                                        suDAO.removeSupplier(removeSupplier());
+                                        break;
+                                }
                                 break;
-
                             //Fechamento do dia
                             case 5:
                                 System.out.println("Digite a data que deseja do fechamento");
@@ -233,8 +279,6 @@ public class Main {
                     }
                     login = true;
                     break;
-
-
                 case 2:
                     System.out.println("*** MENU VENDEDORES ***");
                     option = FirstMenu();
@@ -350,6 +394,95 @@ public class Main {
         int optionMenu = sc.nextInt();
         return optionMenu;
     }
+
+    public static int supplierAdmin() {
+        int option;
+        Scanner sc = new Scanner(System.in);
+        System.out.println("1. Cadastrar fornecedor: ");
+        System.out.println("1. Listar Fornecedor: ");
+        System.out.println("1. Editar Fornecedor: ");
+        System.out.println("1. Remover Fornecedor: ");
+        option = sc.nextInt();
+        return option;
+    }
+
+    public static Supplier insertSupplier(){
+        Scanner sc = new Scanner(System.in);
+
+        String cnpj;
+        String companyName;
+        String namePerson;
+        String email;
+        String passwordEmail;
+        String phone_number;
+        String city;
+        String state;
+        String country;
+        String address;
+        int number_address;
+
+        System.out.print("Enter CNPJ: ");
+        cnpj = sc.nextLine();
+
+        System.out.print("Enter Company Name: ");
+        companyName = sc.nextLine();
+
+        System.out.print("Enter Name of Contact Person: ");
+        namePerson = sc.nextLine();
+
+        System.out.print("Enter Email: ");
+        email = sc.nextLine();
+
+        System.out.print("Enter Email Password: ");
+        passwordEmail = sc.nextLine();
+
+        System.out.print("Enter Phone Number: ");
+        phone_number = sc.nextLine();
+
+        System.out.print("Enter City: ");
+        city = sc.nextLine();
+
+        System.out.print("Enter State: ");
+         state = sc.nextLine();
+
+        System.out.print("Enter Country: ");
+        country = sc.nextLine();
+
+        System.out.print("Enter Address: ");
+        address = sc.nextLine();
+
+        System.out.print("Enter Address Number: ");
+        number_address = sc.nextInt();
+        return new Supplier(cnpj,companyName,namePerson,email,passwordEmail,phone_number,city,state,country,address,number_address);
+    }
+
+    public static int editSupplier(){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("*** QUAL DADO DESEJA EDITAR");
+        System.out.println("1. CNPJ: ");
+        System.out.println("2. Nome Da Compania");
+        System.out.println("3. Nome Do Representate");
+        System.out.println("4. Email: ");
+        System.out.println("5. Senha ");
+        System.out.println("6. Numero Do Celular");
+        System.out.println("7. Cidade");
+        System.out.println("8. Estado");
+        System.out.println("9. Pais");
+        System.out.println("10. Endereco");
+        System.out.println("11. Numero Do Endereço");
+        System.out.print("Digite sua opção: ");
+        int dado = sc.nextInt();
+
+        return dado;
+    }
+
+    public static  String removeSupplier() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Digite o CNPJ do fornecedor que deseja remover: ");
+        String cnpj = sc.nextLine();
+        return cnpj;
+    }
+
     public static int personAdmin(){
         int option;
         Scanner sc = new Scanner(System.in);
