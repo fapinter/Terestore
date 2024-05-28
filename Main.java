@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Main {
 
@@ -203,6 +204,18 @@ public class Main {
                                 }
                                 //Vendas
                             case 3:
+                                optionMenu = salesAdmin();
+                                if(optionMenu == 1){
+                                    rs = saDAO.listSales();
+                                    listSales(rs);
+                                }
+                                else if(optionMenu == 0){
+                                    break;
+                                }
+                                else{
+                                    System.out.println("Opção inválida...");
+                                }
+
                                 break;
 
                             //Fornecedor
@@ -378,6 +391,62 @@ public class Main {
         option = sc.nextInt();
         return option;
     }
+    public static int salesAdmin(){
+        int option;
+        Scanner sc = new Scanner(System.in);
+        System.out.println("1. Listar produtos: ");
+        System.out.println("0. Sair: ");
+        System.out.print("Digite sua opção: ");
+        option = sc.nextInt();
+        return option;
+    }
+    public static void listSales(ResultSet rs){
+        try{
+            int i = 1;
+            double total = 0.00;
+            boolean start = true;
+            boolean restart = false;
+            String name_product = "";
+            int quantity_product = 0;
+            double price_product = 0;
+            String payment_method = "";
+            System.out.println("-------------------------");
+            while(rs.next()){
+                if(rs.getInt("id_sale") == i){
+                    if(start){
+                        System.out.println("*** Venda "+i+" ***");
+                        System.out.println("Nome cliente: "+ rs.getString("name_client"));
+                        System.out.println("Data: "+rs.getDate("sale_date"));
+                        start = false;
+                        if(restart){
+                            System.out.println(name_product + "  "+ price_product+ "  "+ quantity_product);
+                            total += price_product * quantity_product;
+                            restart = false;
+                        }
+                    }
+                    System.out.println(rs.getString("name_product") +"  "+ rs.getDouble("price_product")+"  "+ rs.getInt("quantity_product"));
+                    total += rs.getInt("quantity_product") * rs.getDouble("price_product");
+                    payment_method = rs.getString("payment_method");
+                }
+                else{
+                    System.out.println("Total price: "+ total);
+                    System.out.println("Forma de pagamento: "+ payment_method);
+                    System.out.println("-------------------------");
+                    name_product = rs.getString("name_product");
+                    price_product = rs.getDouble("price_product");
+                    quantity_product = rs.getInt("quantity_product");
+                    total = 0.00;
+                    start = true;
+                    restart = true;
+                    i += 1;
+                }
+            }
+            System.out.println("Total price: "+ total);
+            System.out.println("Forma de pagamento: "+ payment_method);
+            System.out.println("-------------------------");
+        }catch(SQLException ex){ex.printStackTrace();}
+    }
+
 
     public static Products insertProduct(){
         String name;
