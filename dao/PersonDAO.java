@@ -15,7 +15,7 @@ public class PersonDAO {
     public PersonDAO(){conexao = Conexao.getConexao();}
 
     public void insertAdmin(Person p){
-        this.query = "INSERT INTO person(cpf, first_name, email, password_email, type_person, register_date) VALUES (?,?,?,?,?, CURDATE()";
+        this.query = "INSERT INTO person(cpf, first_name, email, password_email, type_person, register_date) VALUES (?,?,?,?,?, CURDATE())";
         try{
             this.ps = conexao.getConnection().prepareStatement(this.query);
             this.ps.setString(1,p.getCpf());
@@ -23,6 +23,7 @@ public class PersonDAO {
             this.ps.setString(3,p.getEmail());
             this.ps.setString(4, p.getPassword_email());
             this.ps.setInt(5, p.getType_person());
+            System.out.println("rodou aqui");
             this.ps.executeUpdate();
             this.ps.close();
         }
@@ -77,7 +78,7 @@ public class PersonDAO {
 
     public int login(String email, String senha){
         int type_person = 0;
-        this.query = "SELECT * FROM person WHERE email = ? AND password_email = ?";
+        this.query = "SELECT * FROM person WHERE BINARY email  = ? AND BINARY password_email  = ?";
         try{
             this.ps = conexao.getConnection().prepareStatement(this.query);
             this.ps.setString(1,email);
@@ -93,15 +94,19 @@ public class PersonDAO {
         }
         return type_person;
     }
-    public ResultSet getPerson(String email){
-        this.query = "SELECT * FROM person WHERE cpf=?";
+    public String getCPF(String email){
+        String cpf = "";
+        this.query = "SELECT cpf FROM person WHERE BINARY email=? AND type_person = 2";
         try{
             this.ps = conexao.getConnection().prepareStatement(this.query);
             this.ps.setString(1,email);
             this.rs = this.ps.executeQuery();
+            while(rs.next()){
+                cpf = rs.getString("cpf");
+            }
         }
         catch(SQLException ex){ex.printStackTrace();}
-        return this.rs;
+        return cpf;
     }
 
     public void editPersonString(String CPF, String value, int COLUMN, int type_person){

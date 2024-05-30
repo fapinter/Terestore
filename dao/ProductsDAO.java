@@ -14,7 +14,7 @@ public class ProductsDAO {
     public ProductsDAO(){conexao = Conexao.getConexao();}
 
     public void insertProduct(Products p){
-        this.query = "INSERT INTO products VALUES(?,?,?,?,?,?)";
+        this.query = "INSERT INTO products(name_product, description_product,price,quantity,name_supplier) VALUES(?,?,?,?,?)";
 
         try{
             this.ps = conexao.getConnection().prepareStatement(this.query);
@@ -38,7 +38,7 @@ public class ProductsDAO {
         return this.rs;
     }
     public void removeProduct(int id){
-        this.query = "DELETE FROM sales WHERE id=?";
+        this.query = "DELETE FROM products WHERE id=?";
         try{
             this.ps = conexao.getConnection().prepareStatement(this.query);
             this.ps.setInt(1, id);
@@ -67,7 +67,7 @@ public class ProductsDAO {
     }
 
     public void editProductsDouble(double newPrice, int id) {
-        String query = "UPDATE person SET price = ? WHERE id = ?";
+        String query = "UPDATE products SET price = ? WHERE id = ?";
         PreparedStatement ps = null;
 
         try {
@@ -89,7 +89,7 @@ public class ProductsDAO {
     }
 
     public void editProductsInt(int newQuantity, int id) {
-        String query = "UPDATE person SET quantity = ? WHERE id = ?";
+        String query = "UPDATE products SET quantity = ? WHERE id = ?";
         PreparedStatement ps = null;
 
         try {
@@ -109,5 +109,4 @@ public class ProductsDAO {
             }
         }
     }
-
 }

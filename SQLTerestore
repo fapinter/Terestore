@@ -2,6 +2,7 @@ DROP DATABASE IF EXISTS terestore;
 CREATE DATABASE IF NOT EXISTS terestore;
 USE terestore;
 
+
 /* --- PERSON --- */
 CREATE TABLE IF NOT EXISTS person(
 	/*CAMPOS GENÉRICOS OBRIGATÓRIOS*/
@@ -68,6 +69,11 @@ CREATE TABLE IF NOT EXISTS sales(
     sale_date DATE NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS id_sales(
+	id_sale int NOT NULL
+);
+
+INSERT INTO id_sales VALUES(6);
 
 /* --- INSERT DO ADMIN À TABELA PERSON --- */
 INSERT INTO person (cpf, first_name, email, password_email, type_person)
