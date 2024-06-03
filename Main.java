@@ -34,7 +34,7 @@ public class Main {
             switch (type_menu){
                 case 1:
                     while(option != 0) {
-                        System.out.println("*** MENU ADMIN ***");
+                        System.out.println("\n*** MENU ADMIN ***");
                         option = menu.FirstMenu();
                         switch (option) {
                             //Pessoas
@@ -80,10 +80,10 @@ public class Main {
                                         break;
 
                                     case 0:
-                                        System.out.println("voltando menu... ");
+                                        System.out.println("voltando ao menu... ");
                                         break;
                                     default:
-                                        System.out.println("Valor incorreto... ");
+                                        System.out.println("Opção inválida... ");
                                         break;
                                 }
                                 break;
@@ -119,7 +119,7 @@ public class Main {
                                         break;
 
                                     default:
-                                        System.out.println("Valor inválido...");
+                                        System.out.println("Opção inválida...");
                                         break;
                                 }
                                 break;
@@ -157,6 +157,7 @@ public class Main {
                                         break;
                                     
                                     case 0:
+                                        System.out.println("voltando ao menu... ");
                                         break;
                                     default:
                                         System.out.println("Opção inválida...");    
@@ -176,7 +177,7 @@ public class Main {
                     break;
                 case 2:
                     while(option != 0){
-                        System.out.println("*** MENU VENDEDORES ***");
+                        System.out.println("\n*** MENU VENDEDORES ***");
                         option = menu.FirstMenu();
                         switch(option){
                             //Pessoas
@@ -212,6 +213,7 @@ public class Main {
 
                                     //Sair
                                     case 0:
+                                        System.out.println("voltando ao menu... ");
                                         break;
 
                                     default:
@@ -242,6 +244,7 @@ public class Main {
 
                                     //Sair
                                     case 0:
+                                        System.out.println("voltando ao menu... ");
                                         break;
                                     
                                     default:
@@ -257,7 +260,7 @@ public class Main {
                                     //Cadastrar venda
                                     case 1:
                                         rs = poDAO.listProducts();
-                                        menu.insertSale(rs, id_sale, saDAO);
+                                        id_sale = menu.insertSale(rs, id_sale, saDAO);
 
 
                                         break;
@@ -270,6 +273,7 @@ public class Main {
 
                                     //Sair
                                     case 0:
+                                        System.out.println("voltando ao menu... ");
                                         break;
 
                                     default:
@@ -298,6 +302,7 @@ public class Main {
                                         break;                  
                                     //Sair
                                     case 0:
+                                        System.out.println("voltando ao menu... ");
                                         break;
                                     default:
                                         System.out.println("Opção inválida...");   
@@ -322,7 +327,7 @@ public class Main {
                     login = true;
                     break;
                 case 0:
-                    System.out.println("Login ou senha incorretos");
+                    System.out.println("Login ou senha incorretos\n");
                     break;
             }
         }

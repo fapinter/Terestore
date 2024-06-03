@@ -15,8 +15,16 @@ public class SalesDAO {
 
     public SalesDAO(){conexao = Conexao.getConexao();}
 
-    public void insertSale(Sales sl){
-        this.query = "INSERT INTO sales VALUES(?,?,1,?,?,?,?, CURDATE())";
+    public void insertSale(Sales sl, int type_sale){
+        //Credito
+        if(type_sale == 1){
+            this.query = "INSERT INTO sales(id_sale,name_client,active_client,name_product,price_product,quantity_product,payment_method,portions,sale_date) VALUES(?,?,1,?,?,?,?,?, CURDATE())";
+        }
+        //Debito ou dinheiro
+        else{
+            this.query = "INSERT INTO sales(id_sale,name_client,active_client,name_product,price_product,quantity_product,payment_method,sale_date) VALUES(?,?,1,?,?,?,?, CURDATE())";
+        }
+        
         try{
             this.ps = conexao.getConnection().prepareStatement(this.query);
             this.ps.setInt(1, sl.getId_sale());
@@ -25,6 +33,10 @@ public class SalesDAO {
             this.ps.setDouble(4,sl.getPrice_product());
             this.ps.setInt(5,sl.getQuantity_product());
             this.ps.setString(6, sl.getPayment_method());
+            if(type_sale == 1){
+                this.ps.setInt(7, sl.getPortions());
+            }
+            
             this.ps.executeUpdate();
             this.ps.close();
         }
@@ -79,6 +91,7 @@ public class SalesDAO {
             this.ps.executeUpdate();
         }
         catch(SQLException ex){ex.printStackTrace();}
+
     }
 
 

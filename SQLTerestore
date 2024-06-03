@@ -66,14 +66,16 @@ CREATE TABLE IF NOT EXISTS sales(
     price_product DOUBLE NOT NULL,
     quantity_product INT NOT NULL,
     payment_method VARCHAR(8) NOT NULL,
+    portions int,
     sale_date DATE NOT NULL
+    
 );
 
 CREATE TABLE IF NOT EXISTS id_sales(
 	id_sale int NOT NULL
 );
 
-INSERT INTO id_sales VALUES(6);
+INSERT INTO id_sales VALUES(5);
 
 /* --- INSERT DO ADMIN À TABELA PERSON --- */
 INSERT INTO person (cpf, first_name, email, password_email, type_person)
@@ -116,8 +118,9 @@ VALUES  ("Cuia de Tereré", "Cuia de Tereré Preto 360ml", 50, 25, "ProdutoraMT"
 		("Galão 3,5L", "Galão para Tereré 3.5 Litros", 45, 15, "MTforever");
 
 
+-- INSERT DEBITO E DINHEIRO
 /* --- INSERT NA TABELA SALES --- */
-INSERT INTO sales
+INSERT INTO sales(id_sale,name_client,active_client,name_product,price_product,quantity_product,payment_method,sale_date)
 VALUES (1, "Amilton",1,"Cuia de Tereré", 50, 3, "Dinheiro",curdate()),
 	   (1, "Amilton",1,"Bomba de Tereré", 15, 1, "Dinheiro", curdate()),
        (1, "Amilton", 1, "Erva Pura Folha", 27, 3, "Dinheiro", curdate()),
@@ -127,12 +130,16 @@ VALUES (1, "Amilton",1,"Cuia de Tereré", 50, 3, "Dinheiro",curdate()),
        (3, "Amilton", 1, "Erva menta e cereja", 36, 6, "Dinheiro", curdate()),
        (3, "Amilton", 1, "Erva hortelã", 32, 3, "Dinheiro", curdate()),
        (3, "Amilton", 1, "Galão 3,5L", 45, 2, "Dinheiro", curdate()),
-       (4, "Claudio", 1, "Erva menta e cereja", 36, 2, "Credito", curdate()),
-       (4, "Claudio", 1, "Erva hortelã", 32, 2, "Credito", curdate()),
        (5, "Amilton", 1, "Erva tradicional", 27, 2, "Debito", curdate()),
        (5, "Amilton", 1, "Erva burrito", 33, 3, "Debito", curdate()),
        (5, "Amilton", 1, "Erva com Limão", 29, 4, "Debito", curdate());
-  
+ 
+ -- INSERT CREDITO
+ INSERT INTO sales(id_sale,name_client,active_client,name_product,price_product,quantity_product,payment_method,portions,sale_date)
+ VALUES(4, "Claudio", 1, "Erva menta e cereja", 36, 2, "Credito",3, curdate()),
+       (4, "Claudio", 1, "Erva hortelã", 32, 2, "Credito",3, curdate());
+ 
+ 
 DROP PROCEDURE IF EXISTS deleteClient;
 DELIMITER $$
 CREATE PROCEDURE deleteClient(IN email_parameter varchar(45), type_p INT)
@@ -152,4 +159,4 @@ BEGIN
 	UPDATE Products SET quantity = quantity - NEW.quantity_product WHERE name_product = NEW.name_product;
 
 END $$
-DELIMITER ; 
+DELIMITER ;

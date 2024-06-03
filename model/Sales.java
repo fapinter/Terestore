@@ -8,8 +8,20 @@ public class Sales {
     private double price_product;
     private int quantity_product;
     private String payment_method;
+    private int portions;
     public Sales(int id_sale, String name_client, int active_client, String name_product,
-                 double price_product, int quantity_product, String payment_method){
+                 double price_product, int quantity_product, String payment_method, int portion){
+        this.id_sale = id_sale;
+        this.name_client = name_client;
+        this.active_client = active_client;
+        this.name_product = name_product;
+        this.price_product = price_product;
+        this.quantity_product = quantity_product;
+        this.payment_method = payment_method;
+        this.portions = portion;
+    }
+    public Sales(int id_sale, String name_client, int active_client, String name_product,
+    double price_product, int quantity_product, String payment_method){
         this.id_sale = id_sale;
         this.name_client = name_client;
         this.active_client = active_client;
@@ -25,4 +37,5 @@ public class Sales {
     public double getPrice_product(){return price_product;}
     public int getQuantity_product(){return quantity_product;}
     public String getPayment_method(){return payment_method;}
+    public int getPortions(){return portions;}
 }

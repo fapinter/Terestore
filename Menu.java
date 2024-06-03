@@ -34,6 +34,7 @@ public class Menu {
         Scanner sc = new Scanner(System.in);
         int option;
         
+        System.out.println("\n*** MENU PESSOAS ***");
         System.out.println("1. Cadastrar Admin: ");
         System.out.println("2. Cadastrar Vendedor: ");
         System.out.println("3. Cadastrar Cliente: ");
@@ -53,7 +54,7 @@ public class Menu {
     public int productsAdmin(){
         Scanner sc = new Scanner(System.in);
         int option;
-    
+        System.out.println("\n*** MENU PRODUTOS ***");
         System.out.println("1. Cadastrar produto: ");
         System.out.println("2. Listar produtos: ");
         System.out.println("3. Editar produtos: ");
@@ -69,7 +70,7 @@ public class Menu {
     public int supplierAdmin() {
         Scanner sc = new Scanner(System.in);
         int option;
-        
+        System.out.println("\n*** MENU FORNECEDOR ***");
         System.out.println("1. Cadastrar fornecedor: ");
         System.out.println("2. Listar Fornecedor: ");
         System.out.println("3. Editar Fornecedor: ");
@@ -85,7 +86,7 @@ public class Menu {
     public int salesAdmin(){
         Scanner sc = new Scanner(System.in);
         int option;
-        
+        System.out.println("\n*** MENU VENDAS ***");
         System.out.println("1. Listar vendas: ");
         System.out.println("0. Sair: ");
         System.out.print("Digite sua opção: ");
@@ -98,7 +99,7 @@ public class Menu {
     public int personSalesman(){
         Scanner sc = new Scanner(System.in);
         int option;
-        
+        System.out.println("\n*** MENU PESSOAS ***");
         System.out.println("1. Cadastrar Cliente: ");
         System.out.println("2. Listar Vendedores: ");
         System.out.println("3. Listar Clientes: ");
@@ -116,6 +117,7 @@ public class Menu {
         Scanner sc = new Scanner(System.in);
         int option;
         
+        System.out.println("\n*** MENU PRODUTOS ***");
         System.out.println("1. Cadastrar produto: ");
         System.out.println("2. Listar produtos: ");
         System.out.println("3. Editar produtos: ");
@@ -131,6 +133,7 @@ public class Menu {
         Scanner sc = new Scanner(System.in);
         int option;
         
+        System.out.println("\n*** MENU VENDAS ***");
         System.out.println("1. Cadastrar venda: ");
         System.out.println("2. Listar vendas: ");
         System.out.println("0. Sair: ");
@@ -145,6 +148,7 @@ public class Menu {
         Scanner sc = new Scanner(System.in);
         int option;
         
+        System.out.println("\n*** MENU FORNECEDOR ***");
         System.out.println("1. Cadastrar fornecedor: ");
         System.out.println("2. Listar fornecedores: ");
         System.out.println("3. Editar fornecedor: ");
@@ -167,6 +171,7 @@ public class Menu {
         String password;
         
         //Fazer verificação das entradas
+        
         System.out.print("Digite o CPF: ");
         cpf = sc.nextLine();
         System.out.print("Digitie o primeiro nome: ");
@@ -253,7 +258,7 @@ public class Menu {
         return new Products(name,description,price,quantity,name_supplier);
     }
 
-    public  void insertSale(ResultSet rs, int id_sale, SalesDAO saDAO){
+    public int insertSale(ResultSet rs, int id_sale, SalesDAO saDAO){
         Scanner sc = new Scanner(System.in);
 
         String name;
@@ -261,6 +266,7 @@ public class Menu {
         int payment_method;
         String paymentString = "";
         int id_product = 1;
+        int parcelas = 0;
         //ID and Name
         Hashtable <Integer, String> name_table = new Hashtable<Integer, String>();
         //ID and price
@@ -271,7 +277,6 @@ public class Menu {
         name = sc.nextLine();
         try{
             while(rs.next()){
-                System.out.println("Id: "+ rs.getInt("id")+ " Nome: "+ rs.getString("name_product"));
                 name_table.put(rs.getInt("id"), rs.getString("name_product"));
                 price_table.put(rs.getInt("id"), rs.getDouble("price"));
             }
@@ -310,6 +315,10 @@ public class Menu {
             case 3:
                 paymentString = "Dinheiro";
                 break;        
+
+            default:
+                System.out.println("ERRO: Opção inválida...");
+                break;    
         }
         if(payment_method == 1){
             if(totalPrice > 1000.00){
@@ -322,7 +331,13 @@ public class Menu {
                 }
                 System.out.println("-----------------------------");
                 System.out.print("Em quantas vezes deseja parcelar: ");
-                sc.nextInt();
+                parcelas = sc.nextInt();
+
+                for(Integer key : All_products.keySet()){
+                    
+                    saDAO.insertSale(new Sales(id_sale, name, 1,
+                    name_table.get(key),price_table.get(key), All_products.get(key), paymentString, parcelas),1);
+                }  
             }
             else{
                 System.out.println("-----------------------------");
@@ -331,24 +346,24 @@ public class Menu {
                 }
                 System.out.println("-----------------------------");
                 System.out.print("Em quantas vezes deseja parcelar: ");
-                sc.nextInt(); 
+                parcelas = sc.nextInt(); 
 
                 for(Integer key : All_products.keySet()){
-                    System.out.println(name_table.get(key)+" "+price_table.get(key)+" "+All_products.get(key));
+                    
                     saDAO.insertSale(new Sales(id_sale, name, 1,
-                    name_table.get(key),price_table.get(key), All_products.get(key), paymentString));
+                    name_table.get(key),price_table.get(key), All_products.get(key), paymentString, parcelas),1);
                 }  
             }                                      
         }
         else if(payment_method == 2 || payment_method == 3){
             for(Integer key : All_products.keySet()){
-                System.out.println(name_table.get(key)+" "+price_table.get(key)+" "+All_products.get(key));
+                
                 saDAO.insertSale(new Sales(id_sale, name, 1,
-                name_table.get(key),price_table.get(key), All_products.get(key), paymentString));
+                name_table.get(key),price_table.get(key), All_products.get(key), paymentString),2);
             }
         }
         saDAO.updateIDsale();
-        
+        return id_sale + 1;
     }
 
     public  Supplier insertSupplier(){
