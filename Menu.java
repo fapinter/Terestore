@@ -3,7 +3,6 @@ import java.sql.SQLException;
 import java.util.Hashtable;
 import java.util.Scanner;
 import java.util.InputMismatchException;
-import java.util.Scanner;
 
 import dao.PersonDAO;
 import dao.ProductsDAO;
@@ -684,7 +683,7 @@ public class Menu {
         System.out.println("\n************************\n");
     }
 
-    public int validationIntMenu(int min, int max) {
+    public static int validationIntMenu(int min, int max) {
         Scanner sc = new Scanner(System.in);
         int option = -1;
         boolean valid = false;
@@ -695,10 +694,11 @@ public class Menu {
                 if (option >= min && option <= max) {
                     valid = true;
                 } else {
-                    System.out.println("Opção inválida. Por favor, insira um número entre " + min + " e " + max + ".");
+                    System.out.print("Opção inválida. Por favor, insira um número entre " + min + " e " + max + ".");
                 }
-            } catch (InputMismatchException e) {
-                System.out.print("Entrada inválida. Por favor, insira um número inteiro: ");
+            } 
+            catch (InputMismatchException e) {
+                System.out.print("Entrada inválida. Por favor, insira um número inteiro entre "+min+"e"+max+": ");
                 sc.next();
             }
         }
@@ -706,7 +706,7 @@ public class Menu {
         return option;
     }
 
-    public int validationInt() {
+    public static  int validationInt() {
         Scanner sc = new Scanner(System.in);
         int option = -1;
         boolean valid = false;
@@ -714,8 +714,9 @@ public class Menu {
         while (!valid) {
             try {
                 option = sc.nextInt();
-                    valid = true;
-                } catch (InputMismatchException e) {
+                valid = true;
+            } 
+            catch (InputMismatchException e) {
                 System.out.print("Entrada inválida. Por favor, insira um número inteiro: ");
                 sc.next();
             }
