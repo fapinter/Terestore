@@ -152,7 +152,7 @@ public class Menu {
         System.out.print("Digite o CPF: ");
         cpf = sc.nextLine();
         System.out.print("Digitie o primeiro nome: ");
-        first_name = sc.nextLine();
+        first_name = validationString(sc);
         System.out.print("Digite o email: ");
         email = sc.nextLine();
         System.out.print("Digite a senha: ");
@@ -163,7 +163,6 @@ public class Menu {
 
     public  Person insertClientSalesman(int type_person){
         Scanner sc = new Scanner(System.in);
-
         String cpf;
         String first_name;
         String email;
@@ -181,27 +180,27 @@ public class Menu {
         System.out.print("Digite o cpf: ");
         cpf = sc.nextLine();
         System.out.print("Digite o primeiro nome: ");
-        first_name = sc.nextLine();
+        first_name = validationString(sc);
         System.out.println("Digite o email: ");
         email = sc.nextLine();
         System.out.print("Digite a senha: ");
         password = sc.nextLine();
         System.out.print("Digite o sobrenome: ");
-        last_name = sc.nextLine();
+        last_name = validationString(sc);
         System.out.print("Digite a data de nascimento: ");
         birthdate = sc.nextLine();
         System.out.print("Digite o número de celular: ");
         cellphone = sc.nextLine();
         System.out.print("Digite a cidade: ");
-        city = sc.nextLine();
+        city = validationString(sc);
         System.out.print("Digite o estado: ");
-        state = sc.nextLine();
+        state = validationString(sc);
         System.out.print("Digite o país: ");
-        country = sc.nextLine();
+        country = validationString(sc);
         System.out.print("Digite o endereço(sem o número): ");
-        address = sc.nextLine();
+        address = validationString(sc);
         System.out.print("Digite o numero do endereço: ");
-        number_address = sc.nextInt();
+        number_address = validationInt();
         
 
         return new Person(cpf,first_name,email,password, type_person,
@@ -221,15 +220,15 @@ public class Menu {
         
 
         System.out.print("Digite o nome do produto: ");
-        name = scString.nextLine();
+        name = validationString(scString);
         System.out.print("Escreva a descrição do produto: ");
-        description = scString.nextLine();
+        description = validationString(scString);
         System.out.print("Digite o preço: ");
         double price = Double.parseDouble(scString.nextLine());
         System.out.print("Digite a quantidade: ");
-        quantity = scInt.nextInt();
+        quantity = validationInt();
         System.out.print("Digite o nome do fornecedor: ");
-        name_supplier = scString.nextLine();
+        name_supplier = validationString(scString);
         
 
         return new Products(name,description,price,quantity,name_supplier);
@@ -251,7 +250,7 @@ public class Menu {
         //ID and quantity
         Hashtable <Integer, Integer> All_products = new Hashtable<Integer,Integer>(); 
         System.out.print("Digite o nome do cliente: ");
-        name = sc.nextLine();
+        name = validationString(sc);
         try{
             while(rs.next()){
                 name_table.put(rs.getInt("id"), rs.getString("name_product"));
@@ -271,7 +270,7 @@ public class Menu {
             id_product = sc.nextInt();
             if(id_product != 0){
                 System.out.print("Quantas unidades do produto: ");
-                int quantidade = sc.nextInt();
+                int quantidade = validationInt();
                 totalPrice += price_table.get(id_product) * quantidade;
                 All_products.put(id_product, quantidade);
             }
@@ -361,9 +360,9 @@ public class Menu {
         System.out.print("Digite o CNPJ: ");
         cnpj = sc.nextLine();
         System.out.print("Digite o nome da empresa: ");
-        companyName = sc.nextLine();
+        companyName = validationString(sc);
         System.out.print("Digite o nome da pessoa: ");
-        namePerson = sc.nextLine();
+        namePerson = validationString(sc);
         System.out.print("Digite o email: ");
         email = sc.nextLine();
         System.out.print("Digite a senha: ");
@@ -371,13 +370,13 @@ public class Menu {
         System.out.print("Digite o número de celular: ");
         phone_number = sc.nextLine();
         System.out.print("Digite a cidade: ");
-        city = sc.nextLine();
+        city = validationString(sc);
         System.out.print("Digite o estado: ");
-         state = sc.nextLine();
+         state = validationString(sc);
         System.out.print("Digite o país: ");
-        country = sc.nextLine();
+        country = validationString(sc);
         System.out.print("Digite o endereço(sem o número): ");
-        address = sc.nextLine();
+        address = validationString(sc);
         System.out.print("Digite o número do endereço: ");
         number_address = validationInt();
         
@@ -643,7 +642,7 @@ public class Menu {
     public  String removePerson(String person){
         Scanner sc = new Scanner(System.in);
         System.out.print("Digite o email do "+ person+": ");
-        String email = sc.nextLine();
+        String email = validationString(sc);
         
         return email;
     }
@@ -706,7 +705,7 @@ public class Menu {
         return option;
     }
 
-    public static  int validationInt() {
+    public static int validationInt() {
         Scanner sc = new Scanner(System.in);
         int option = -1;
         boolean valid = false;
@@ -723,6 +722,18 @@ public class Menu {
         }
 
         return option;
+    }
+
+    public static String validationString(Scanner sc) {
+        String input = "";
+
+        while (input.isEmpty() || !input.matches("[a-zA-Z\\s]+")) {
+            input = sc.nextLine();
+            if (!input.matches("[a-zA-Z\\s]+")) {
+                System.out.print("Entrada inválida. Por favor, insira apenas letras e espaços: ");
+            }
+        }
+        return input;
     }
 
 }

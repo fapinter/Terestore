@@ -4,13 +4,13 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         PersonDAO peDAO = new PersonDAO();
         SupplierDAO suDAO = new SupplierDAO();
         ProductsDAO poDAO = new ProductsDAO();
         SalesDAO saDAO = new SalesDAO();
         Menu menu = new Menu();
-    
+
 
         ResultSet rs;
         Scanner sc = new Scanner(System.in);
@@ -23,7 +23,7 @@ public class Main {
         while (!login){
             //Login do usuario ao sistema
             System.out.print("LOGIN: ");
-            String email = sc.nextLine();
+            String email = menu.validationString(sc);
             System.out.print("SENHA: ");
             String senha = sc.nextLine();
             int type_menu = peDAO.login(email,senha);
