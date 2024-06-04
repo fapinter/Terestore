@@ -727,12 +727,13 @@ public class Menu {
     public static String validationString(Scanner sc) {
         String input = "";
 
-        while (input.isEmpty() || !input.matches("[a-zA-Z\\s]+")) {
+        while (input.isEmpty() || !input.matches("[\\p{L}\\s]+")) {
             input = sc.nextLine();
-            if (!input.matches("[a-zA-Z\\s]+")) {
+            if (!input.matches("[\\p{L}\\s]+")) {
                 System.out.print("Entrada inválida. Por favor, insira apenas letras e espaços: ");
             }
         }
+
         return input;
     }
 
