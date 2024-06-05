@@ -210,8 +210,7 @@ public class Menu {
     public  Products insertProduct(){
         Scanner scString = new Scanner(System.in);
         Scanner scInt = new Scanner(System.in);
-        Scanner scDouble = new Scanner(System.in);
-
+        Scanner sc = new Scanner(System.in);
         String name;
         String description;
         
@@ -224,7 +223,7 @@ public class Menu {
         System.out.print("Escreva a descrição do produto: ");
         description = validationString(scString);
         System.out.print("Digite o preço: ");
-        double price = Double.parseDouble(scString.nextLine());
+        double price = validationDouble(sc);
         System.out.print("Digite a quantidade: ");
         quantity = validationInt();
         System.out.print("Digite o nome do fornecedor: ");
@@ -727,14 +726,32 @@ public class Menu {
     public static String validationString(Scanner sc) {
         String input = "";
 
-        while (input.isEmpty() || !input.matches("[\\p{L}\\s]+")) {
+        while (input.isEmpty() || !input.matches("[\\p{L}\\s@._-]+")) {
             input = sc.nextLine();
-            if (!input.matches("[\\p{L}\\s]+")) {
-                System.out.print("Entrada inválida. Por favor, insira apenas letras e espaços: ");
+            if (!input.matches("[\\p{L}\\s@._-]+")) {
+                System.out.print("Entrada inválida. Por favor, insira apenas letras, espaços: ");
             }
         }
 
         return input;
+    }
+
+
+    public static double validationDouble(Scanner sc) {
+        double value = 0.0;
+        boolean valid = false;
+
+        while (!valid) {
+            try {
+                String input = sc.nextLine();
+                value = Double.parseDouble(input);
+                valid = true;
+            } catch (NumberFormatException e) {
+                System.out.print("Entrada inválida. Por favor, insira um valor numérico: ");
+            }
+        }
+
+        return value;
     }
 
 }

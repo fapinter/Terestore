@@ -50,7 +50,7 @@ public class Main {
                                     case 2:
                                         peDAO.insertPerson(menu.insertClientSalesman(2));
                                         break;
-
+ 
                                     //Cadastrar Cliente
                                     case 3:
                                         peDAO.insertPerson(menu.insertClientSalesman(3));
