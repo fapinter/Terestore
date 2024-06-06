@@ -45,12 +45,11 @@ public class Main {
                                     case 1:
                                         peDAO.insertAdmin(menu.insertAdmin());
                                         break;
-
                                     //Cadastrar Vendedor
                                     case 2:
                                         peDAO.insertPerson(menu.insertClientSalesman(2));
                                         break;
- 
+
                                     //Cadastrar Cliente
                                     case 3:
                                         peDAO.insertPerson(menu.insertClientSalesman(3));
