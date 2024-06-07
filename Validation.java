@@ -1,12 +1,39 @@
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Validation {
+
+    private static ArrayList<String> emails = new ArrayList<>();
+
+    static {
+        emails.add("@gmail.com");
+        emails.add("@yahoo.com");
+        emails.add("@hotmail.com");
+        emails.add("@pucpr.edu.br");
+    }
+    public static String validateEmail(Scanner sc) {
+        String input = "";
+        boolean valid = false;
+
+        while (!valid) {
+            input = sc.nextLine().trim();
+            for (String email : emails) {
+                if (input.endsWith(email)) {
+                    valid = true;
+                    break;
+                }
+            }
+            if (!valid) {
+                System.out.print("Por favor, insira um endereço de e-mail válido: ");
+            }
+        }
+        return input;
+    }
 
     public static int validationIntMenu(int min, int max) {
         Scanner sc = new Scanner(System.in);
@@ -49,6 +76,8 @@ public class Validation {
 
         return option;
     }
+
+
 
     public static String validationString(Scanner sc) {
         String input = "";

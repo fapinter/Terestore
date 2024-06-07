@@ -154,7 +154,7 @@ public class Menu {
         System.out.print("Digitie o primeiro nome: ");
         first_name = Validation.validationString(sc);
         System.out.print("Digite o email: ");
-        email = Validation.validationString(sc);
+        email = Validation.validateEmail(sc);
         System.out.print("Digite a senha: ");
         password = sc.nextLine();
         
@@ -184,7 +184,7 @@ public class Menu {
         System.out.print("Digite o sobrenome: ");
         last_name = Validation.validationString(sc);
         System.out.print("Digite o email: ");
-        email = Validation.validationString(sc);
+        email = Validation.validateEmail(sc);
         System.out.print("Digite a senha: ");
         password = sc.nextLine();
         System.out.print("Digite a data de nascimento (dd/MM/yyyy): ");
@@ -361,7 +361,7 @@ public class Menu {
         System.out.print("Digite o nome da pessoa: ");
         namePerson = Validation.validationString(sc);
         System.out.print("Digite o email: ");
-        email = Validation.validationString(sc);
+        email = Validation.validateEmail(sc);
         System.out.print("Digite a senha: ");
         passwordEmail = sc.nextLine();
         System.out.print("Digite o número de celular: ");
@@ -639,7 +639,7 @@ public class Menu {
     public  String removePerson(String person){
         Scanner sc = new Scanner(System.in);
         System.out.print("Digite o email do "+ person+": ");
-        String email = Validation.validationString(sc);
+        String email = Validation.validateEmail(sc);
         
         return email;
     }
