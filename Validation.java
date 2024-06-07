@@ -1,5 +1,10 @@
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Validation {
 
@@ -86,5 +91,27 @@ public class Validation {
             }
         }
         return input;
+    }
+    public static String validateDate(Scanner sc) {
+        String input = "";
+        Pattern pattern = Pattern.compile("^\\d{2}/\\d{2}/\\d{4}$");
+        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        while (true) {
+            input = sc.nextLine().trim();
+            Matcher matcher = pattern.matcher(input);
+            if (matcher.matches()) {
+                SimpleDateFormat inputFormat = new SimpleDateFormat("dd/MM/yyyy");
+                inputFormat.setLenient(false);
+                try {
+                    java.util.Date date = inputFormat.parse(input);
+                    return outputFormat.format(date);
+                } catch (ParseException e) {
+                    System.out.print("Entrada inválida. Por favor, insira uma data válida (dd/MM/yyyy): ");
+                }
+            } else {
+                System.out.print("Entrada inválida. Por favor, insira uma data no formato dd/MM/yyyy: ");
+            }
+        }
     }
 }

@@ -181,14 +181,14 @@ public class Menu {
         cpf = Validation.validateStringInt(sc);
         System.out.print("Digite o primeiro nome: ");
         first_name = Validation.validationString(sc);
-        System.out.println("Digite o email: ");
+        System.out.print("Digite o sobrenome: ");
+        last_name = Validation.validationString(sc);
+        System.out.print("Digite o email: ");
         email = Validation.validationString(sc);
         System.out.print("Digite a senha: ");
         password = sc.nextLine();
-        System.out.print("Digite o sobrenome: ");
-        last_name = Validation.validationString(sc);
-        System.out.print("Digite a data de nascimento: ");
-        birthdate = Validation.validateStringInt(sc);
+        System.out.print("Digite a data de nascimento (dd/MM/yyyy): ");
+        birthdate = Validation.validateDate(sc);
         System.out.print("Digite o número de celular: ");
         cellphone = Validation.validateStringInt(sc);
         System.out.print("Digite a cidade: ");
@@ -520,7 +520,7 @@ public class Menu {
 
         if (column == 6){
             System.out.print("Digite a data no modelo YYYY-MM-DD: ");
-            String date = scDate.nextLine();
+            String date =  Validation.validateDate(scDate);
             peDAO.editPersonDate(cpf, date, 3);
         } else if (column == 12){
             System.out.print("Digite o número do endereço: ");
@@ -556,7 +556,7 @@ public class Menu {
         
         if (column == 6){
             System.out.print("Digite a data no modelo YYYY-MM-DD: ");
-            String date = scNewValue.nextLine();
+            String date =  Validation.validateDate(sc);
             peDAO.editPersonDate(cpf, date, 2);
         } else if (column == 12){
             System.out.print("Digite o número do endereço: ");
