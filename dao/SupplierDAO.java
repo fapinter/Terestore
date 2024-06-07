@@ -1,6 +1,7 @@
 package dao;
 
 import java.sql.SQLException;
+import java.sql.SQLSyntaxErrorException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -24,7 +25,9 @@ public class SupplierDAO {
             this.ps.executeUpdate();
             this.ps.close();
 
-        } catch(SQLException ex){ex.printStackTrace();}
+        } 
+        catch (SQLSyntaxErrorException ex){System.out.println("Erro na sintaxe MySQL, verifique o código MySQL");}
+        catch(SQLException ex){System.out.println("Erro: conexão com o banco de dados, verifique sua senha e/ou usuário");}
     }
 
     public ResultSet listSupplier(){
@@ -33,7 +36,8 @@ public class SupplierDAO {
             this.ps = conexao.getConnection().prepareStatement(this.query);
             this.rs = this.ps.executeQuery();
         }
-        catch(SQLException ex){ex.printStackTrace();}
+        catch (SQLSyntaxErrorException ex){System.out.println("Erro na sintaxe MySQL, verifique o código MySQL");}
+        catch(SQLException ex){System.out.println("Erro: conexão com o banco de dados, verifique sua senha e/ou usuário");}
         return this.rs;
     }
     public void removeSupplier(String cnpj){
@@ -45,7 +49,8 @@ public class SupplierDAO {
             this.ps.executeUpdate();
             this.ps.close();
         }
-        catch(SQLException ex){ex.printStackTrace();}
+        catch (SQLSyntaxErrorException ex){System.out.println("Erro na sintaxe MySQL, verifique o código MySQL");}
+        catch(SQLException ex){System.out.println("Erro: conexão com o banco de dados, verifique sua senha e/ou usuário");}
     }
     public ResultSet getSupplier(String cnpj){
         this.query = "SELECT * FROM supplier WHERE cnpj=?";
@@ -54,7 +59,8 @@ public class SupplierDAO {
             this.ps.setString(1,cnpj);
             this.rs = this.ps.executeQuery();
         }
-        catch(SQLException ex){ex.printStackTrace();}
+        catch (SQLSyntaxErrorException ex){System.out.println("Erro na sintaxe MySQL, verifique o código MySQL");}
+        catch(SQLException ex){System.out.println("Erro: conexão com o banco de dados, verifique sua senha e/ou usuário");}
         return this.rs;
     }
 
@@ -80,7 +86,8 @@ public class SupplierDAO {
             this.ps.executeUpdate();
             this.ps.close();
         }
-        catch(SQLException ex){ex.printStackTrace();}
+        catch (SQLSyntaxErrorException ex){System.out.println("Erro na sintaxe MySQL, verifique o código MySQL");}
+        catch(SQLException ex){System.out.println("Erro: conexão com o banco de dados, verifique sua senha e/ou usuário");}
     }
     public void editSupplierInt(String cnpj, int value){
         this.query = "UPDATE supplier SET number_address = ? WHERE cnpj = ?";
@@ -91,7 +98,8 @@ public class SupplierDAO {
             this.ps.executeUpdate();
             this.ps.close();
         }
-        catch(SQLException ex){ex.printStackTrace();}
+        catch (SQLSyntaxErrorException ex){System.out.println("Erro na sintaxe MySQL, verifique o código MySQL");}
+        catch(SQLException ex){System.out.println("Erro: conexão com o banco de dados, verifique sua senha e/ou usuário");}
     }
     public void valuesQuery(Supplier sp){
         try{
@@ -107,6 +115,7 @@ public class SupplierDAO {
             this.ps.setString(10,sp.getAddress());
             this.ps.setInt(11,sp.getNumber_address());
         }
-        catch(SQLException ex){ex.printStackTrace();}
+        catch (SQLSyntaxErrorException ex){System.out.println("Erro na sintaxe MySQL, verifique o código MySQL");}
+        catch(SQLException ex){System.out.println("Erro: conexão com o banco de dados, verifique sua senha e/ou usuário");}
     }
 }

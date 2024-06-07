@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS person(
     first_name VARCHAR(45) NOT NULL,
     email VARCHAR(45) NOT NULL,
     password_email VARCHAR(45) NOT NULL,
-    type_person int NOT NULL, -- 1: admin, 2: slaesmna, 3: client
+    type_person int NOT NULL, -- 1: admin, 2: salesman, 3: client
     
     /*CAMPOS ESPECÍFICOS, PARA CLIENT E SALESMAN*/
     
@@ -118,26 +118,24 @@ VALUES  ("Cuia de Tereré", "Cuia de Tereré Preto 360ml", 50, 25, "ProdutoraMT"
 		("Galão 3,5L", "Galão para Tereré 3.5 Litros", 45, 15, "MTforever");
 
 
--- INSERT DEBITO E DINHEIRO
+
 /* --- INSERT NA TABELA SALES --- */
-INSERT INTO sales(id_sale,name_client,active_client,name_product,price_product,quantity_product,payment_method,sale_date)
-VALUES (1, "Amilton",1,"Cuia de Tereré", 50, 3, "Dinheiro",curdate()),
-	   (1, "Amilton",1,"Bomba de Tereré", 15, 1, "Dinheiro", curdate()),
-       (1, "Amilton", 1, "Erva Pura Folha", 27, 3, "Dinheiro", curdate()),
-       (2, "Claudio", 1, "Erva burrito", 33, 2, "Debito", curdate()),
-       (2, "Claudio", 1, "Galão 3,5L", 45, 1, "Debito", curdate()),
-       (3, "Amilton", 1, "Erva com menta", 32, 5, "Dinheiro", curdate()),
-       (3, "Amilton", 1, "Erva menta e cereja", 36, 6, "Dinheiro", curdate()),
-       (3, "Amilton", 1, "Erva hortelã", 32, 3, "Dinheiro", curdate()),
-       (3, "Amilton", 1, "Galão 3,5L", 45, 2, "Dinheiro", curdate()),
-       (5, "Amilton", 1, "Erva tradicional", 27, 2, "Debito", curdate()),
-       (5, "Amilton", 1, "Erva burrito", 33, 3, "Debito", curdate()),
-       (5, "Amilton", 1, "Erva com Limão", 29, 4, "Debito", curdate());
- 
- -- INSERT CREDITO
- INSERT INTO sales(id_sale,name_client,active_client,name_product,price_product,quantity_product,payment_method,portions,sale_date)
- VALUES(4, "Claudio", 1, "Erva menta e cereja", 36, 2, "Credito",3, curdate()),
-       (4, "Claudio", 1, "Erva hortelã", 32, 2, "Credito",3, curdate());
+-- Vendas com portions = 0 são de debito ou credito,ent parcelas não são consideradas
+INSERT INTO sales(id_sale,name_client,active_client,name_product,price_product,quantity_product,payment_method,portions,sale_date)
+VALUES (1, "Amilton",1,"Cuia de Tereré", 50, 3, "Dinheiro",0,curdate()),
+	   (1, "Amilton",1,"Bomba de Tereré", 15, 1, "Dinheiro",0, curdate()),
+       (1, "Amilton", 1, "Erva Pura Folha", 27, 3, "Dinheiro",0, curdate()),
+       (2, "Claudio", 1, "Erva burrito", 33, 2, "Debito",0, curdate()),
+       (2, "Claudio", 1, "Galão 3,5L", 45, 1, "Debito",0, curdate()),
+       (3, "Amilton", 1, "Erva com menta", 32, 5, "Dinheiro",0, curdate()),
+       (3, "Amilton", 1, "Erva menta e cereja", 36, 6, "Dinheiro",0, curdate()),
+       (3, "Amilton", 1, "Erva hortelã", 32, 3, "Dinheiro",0, curdate()),
+       (3, "Amilton", 1, "Galão 3,5L", 45, 2, "Dinheiro",0, curdate()),
+       (4, "Claudio", 1, "Erva menta e cereja", 36, 2, "Credito",3, curdate()),
+       (4, "Claudio", 1, "Erva hortelã", 32, 2, "Credito",3, curdate()),
+       (5, "Amilton", 1, "Erva tradicional", 27, 2, "Debito",0, curdate()),
+       (5, "Amilton", 1, "Erva burrito", 33, 3, "Debito",0, curdate()),
+       (5, "Amilton", 1, "Erva com Limão", 29, 4, "Debito",0, curdate());
  
  
 DROP PROCEDURE IF EXISTS deleteClient;

@@ -1,6 +1,7 @@
 package dao;
 
 import java.sql.SQLException;
+import java.sql.SQLSyntaxErrorException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import model.Products;
@@ -26,7 +27,8 @@ public class ProductsDAO {
             this.ps.executeUpdate();
             this.ps.close();
         }
-        catch (SQLException ex){ex.printStackTrace();}
+        catch (SQLSyntaxErrorException ex){System.out.println("Erro na sintaxe MySQL, verifique o código MySQL");}
+        catch (SQLException ex){System.out.println("Erro: conexão com o banco de dados, verifique sua senha e/ou usuário");}
     }
     public ResultSet listProducts(){
         this.query = "SELECT * FROM products";
@@ -34,7 +36,8 @@ public class ProductsDAO {
             this.ps = conexao.getConnection().prepareStatement(this.query);
             this.rs = ps.executeQuery();
         }
-        catch(SQLException ex){ex.printStackTrace();}
+        catch (SQLSyntaxErrorException ex){System.out.println("Erro na sintaxe MySQL, verifique o código MySQL");}
+        catch(SQLException ex){System.out.println("Erro: conexão com o banco de dados, verifique sua senha e/ou usuário");}
         return this.rs;
     }
     public void removeProduct(int id){
@@ -45,7 +48,8 @@ public class ProductsDAO {
             this.ps.executeUpdate();
             this.ps.close();
         }
-        catch(SQLException ex){ex.printStackTrace();}
+        catch (SQLSyntaxErrorException ex){System.out.println("Erro na sintaxe MySQL, verifique o código MySQL");}
+        catch(SQLException ex){System.out.println("Erro: conexão com o banco de dados, verifique sua senha e/ou usuário");}
     }
 
     public void editProductsString(int id, String value, int COLUMN){
@@ -63,7 +67,8 @@ public class ProductsDAO {
             this.ps.executeUpdate();
             this.ps.close();
         }
-        catch(SQLException ex){ex.printStackTrace();}
+        catch (SQLSyntaxErrorException ex){System.out.println("Erro na sintaxe MySQL, verifique o código MySQL");}
+        catch(SQLException ex){System.out.println("Erro: conexão com o banco de dados, verifique sua senha e/ou usuário");}
     }
 
     public void editProductsDouble(double newPrice, int id) {
@@ -75,8 +80,10 @@ public class ProductsDAO {
             ps.setDouble(1, newPrice);
             ps.setInt(2, id);
             ps.executeUpdate();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+        } 
+        catch (SQLSyntaxErrorException ex){System.out.println("Erro na sintaxe MySQL, verifique o código MySQL");}
+        catch (SQLException ex) {
+            System.out.println("Erro: conexão com o banco de dados, verifique sua senha e/ou usuário");
         } finally {
             if (ps != null) {
                 try {
@@ -97,8 +104,10 @@ public class ProductsDAO {
             ps.setInt(1, newQuantity);
             ps.setInt(2, id);
             ps.executeUpdate();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+        } 
+        catch (SQLSyntaxErrorException ex){System.out.println("Erro na sintaxe MySQL, verifique o código MySQL");}
+        catch (SQLException ex) {
+            System.out.println("Erro: conexão com o banco de dados, verifique sua senha e/ou usuário");
         } finally {
             if (ps != null) {
                 try {

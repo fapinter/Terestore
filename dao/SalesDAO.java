@@ -1,6 +1,7 @@
 package dao;
 
 import java.sql.SQLException;
+import java.sql.SQLSyntaxErrorException;
 import java.util.InputMismatchException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -40,7 +41,8 @@ public class SalesDAO {
             this.ps.executeUpdate();
             this.ps.close();
         }
-        catch (SQLException ex){ex.printStackTrace();}
+        catch (SQLSyntaxErrorException ex){System.out.println("Erro na sintaxe MySQL, verifique o código MySQL");}
+        catch(SQLException ex){System.out.println("Erro: conexão com o banco de dados, verifique sua senha e/ou usuário");}
     }
 
     public ResultSet listSales(){
@@ -50,7 +52,8 @@ public class SalesDAO {
             this.rs = this.ps.executeQuery();
 
         }
-        catch(SQLException ex){ex.printStackTrace();}
+        catch (SQLSyntaxErrorException ex){System.out.println("Erro na sintaxe MySQL, verifique o código MySQL");}
+        catch(SQLException ex){System.out.println("Erro: conexão com o banco de dados, verifique sua senha e/ou usuário");}
         return this.rs;
     }
 
@@ -63,10 +66,8 @@ public class SalesDAO {
             this.rs = this.ps.executeQuery();
 
         }
-        catch (SQLException ex){
-            System.out.println("Entrada incorreta de data...");
-            
-        }
+        catch (SQLSyntaxErrorException ex){System.out.println("Erro na sintaxe MySQL, verifique o código MySQL");}
+        catch (SQLException ex){System.out.println("Erro: conexão com o banco de dados, verifique sua senha e/ou usuário"); }
         catch(InputMismatchException IMEx){
             System.out.print("Digite a data novamente: ");
         }
@@ -81,7 +82,11 @@ public class SalesDAO {
             this.rs.next();
             id = this.rs.getInt("id_sale");
         }
-        catch(SQLException ex){ex.printStackTrace();}
+        catch (NullPointerException ex){
+            System.out.println("Ponteiro retornado nulo");
+        }
+        catch (SQLSyntaxErrorException ex){System.out.println("Erro na sintaxe MySQL, verifique o código MySQL");}
+        catch(SQLException ex){System.out.println("Erro: conexão com o banco de dados, verifique sua senha e/ou usuário");}
         return id + 1;
     }
     public void updateIDsale(){
@@ -90,7 +95,8 @@ public class SalesDAO {
             this.ps = conexao.getConnection().prepareStatement(this.query);
             this.ps.executeUpdate();
         }
-        catch(SQLException ex){ex.printStackTrace();}
+        catch (SQLSyntaxErrorException ex){System.out.println("Erro na sintaxe MySQL, verifique o código MySQL");}
+        catch(SQLException ex){System.out.println("Erro: conexão com o banco de dados, verifique sua senha e/ou usuário");}
 
     }
 

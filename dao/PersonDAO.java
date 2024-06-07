@@ -2,6 +2,7 @@ package dao;
 
 import java.sql.Date;
 import java.sql.SQLException;
+import java.sql.SQLSyntaxErrorException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import model.Person;
@@ -27,7 +28,8 @@ public class PersonDAO {
             this.ps.executeUpdate();
             this.ps.close();
         }
-        catch(SQLException ex){ex.printStackTrace();}
+        catch (SQLSyntaxErrorException ex){System.out.println("Erro na sintaxe MySQL, verifique o código MySQL");}
+        catch(SQLException ex){System.out.println("Erro: conexão com o banco de dados, verifique sua senha e/ou usuário");}
 
     }
     public void insertPerson(Person p){
@@ -39,7 +41,8 @@ public class PersonDAO {
             this.ps.executeUpdate();
             this.ps.close();
         }
-        catch (SQLException ex){ex.printStackTrace();}
+        catch (SQLSyntaxErrorException ex){System.out.println("Erro na sintaxe MySQL, verifique o código MySQL");}
+        catch (SQLException ex){System.out.println("Erro: conexão com o banco de dados, verifique sua senha e/ou usuário");}
 
     }
     public ResultSet listPerson(int type){
@@ -49,7 +52,8 @@ public class PersonDAO {
             this.ps.setInt(1,type);
             this.rs = this.ps.executeQuery();
         }
-        catch(SQLException ex){ex.printStackTrace();}
+        catch (SQLSyntaxErrorException ex){System.out.println("Erro na sintaxe MySQL, verifique o código MySQL");}
+        catch(SQLException ex){System.out.println("Erro: conexão com o banco de dados, verifique sua senha e/ou usuário");}
         return this.rs;
     }
 
@@ -62,7 +66,8 @@ public class PersonDAO {
             this.ps.executeUpdate();
             this.ps.close();
         }
-        catch(SQLException ex){ex.printStackTrace();}
+        catch (SQLSyntaxErrorException ex){System.out.println("Erro na sintaxe MySQL, verifique o código MySQL");}
+        catch(SQLException ex){System.out.println("Erro: conexão com o banco de dados, verifique sua senha e/ou usuário");}
     }
     public void removeClient(String email, int type_person){
         this.query = "{call deleteClient(?, ?)}";
@@ -73,7 +78,8 @@ public class PersonDAO {
             this.ps.executeUpdate();
             this.ps.close();
         }
-        catch(SQLException ex){ex.printStackTrace();}
+        catch (SQLSyntaxErrorException ex){System.out.println("Erro na sintaxe MySQL, verifique o código MySQL");}
+        catch(SQLException ex){System.out.println("Erro: conexão com o banco de dados, verifique sua senha e/ou usuário");}
     }
 
     public int login(String email, String senha){
@@ -89,8 +95,9 @@ public class PersonDAO {
 
             else{type_person = rs.getInt("type_person");}
         }
+        catch (SQLSyntaxErrorException ex){System.out.println("Erro na sintaxe MySQL, verifique o código MySQL");}
         catch(SQLException ex){
-            ex.printStackTrace();
+            System.out.println("Erro: conexão com o banco de dados, verifique sua senha e/ou usuário");
         }
         return type_person;
     }
@@ -105,7 +112,8 @@ public class PersonDAO {
                 cpf = rs.getString("cpf");
             }
         }
-        catch(SQLException ex){ex.printStackTrace();}
+        catch (SQLSyntaxErrorException ex){System.out.println("Erro na sintaxe MySQL, verifique o código MySQL");}
+        catch(SQLException ex){System.out.println("Erro: conexão com o banco de dados, verifique sua senha e/ou usuário");}
         return cpf;
     }
 
@@ -132,7 +140,9 @@ public class PersonDAO {
             this.ps.setInt(3, type_person);
             this.ps.executeUpdate();
             this.ps.close();
-        } catch(SQLException ex){ex.printStackTrace();}
+        } 
+        catch (SQLSyntaxErrorException ex){System.out.println("Erro na sintaxe MySQL, verifique o código MySQL");}
+        catch(SQLException ex){System.out.println("Erro: conexão com o banco de dados, verifique sua senha e/ou usuário");}
     }
     public void editPersonInt(String CPF, int value, int type_person){
         this.query = "UPDATE person SET number_address= ? WHERE cpf=? AND type_person=?";
@@ -143,7 +153,9 @@ public class PersonDAO {
             this.ps.setInt(3, type_person);
             this.ps.executeUpdate();
             this.ps.close();
-        } catch(SQLException ex){ex.printStackTrace();}
+        } 
+        catch (SQLSyntaxErrorException ex){System.out.println("Erro na sintaxe MySQL, verifique o código MySQL");}
+        catch(SQLException ex){System.out.println("Erro: conexão com o banco de dados, verifique sua senha e/ou usuário");}
     }
     public void editPersonDate(String CPF, String value, int type_person){
         this.query = "UPDATE person SET birthdate= ? WHERE cpf = ? AND type_person = ?";
@@ -154,7 +166,9 @@ public class PersonDAO {
             this.ps.setInt(3,type_person);
             this.ps.executeUpdate();
             this.ps.close();
-        } catch(SQLException ex){ex.printStackTrace();}
+        } 
+        catch (SQLSyntaxErrorException ex){System.out.println("Erro na sintaxe MySQL, verifique o código MySQL");}
+        catch(SQLException ex){System.out.println("Erro: conexão com o banco de dados, verifique sua senha e/ou usuário");}
     }
 
     public void valuesQuery(Person p){
@@ -173,6 +187,7 @@ public class PersonDAO {
             this.ps.setString(12,p.getAdress());
             this.ps.setInt(13,p.getNumber_address());
         }
-        catch(SQLException ex){ex.printStackTrace();}
+        
+        catch(SQLException ex){System.out.println("Erro: conexão com o banco de dados, verifique sua senha e/ou usuário");}
     }
 }

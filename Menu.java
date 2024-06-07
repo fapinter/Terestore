@@ -255,7 +255,8 @@ public class Menu {
             }
             
         }
-        catch(SQLException ex){ex.printStackTrace();}
+        catch(SQLException ex){System.out.println("Erro ao coletar dados dos produtos, verifique a conexão com o"+
+            "banco de dados");}
         while(id_product != 0){
             System.out.println("--------------------------------");
             for(int i = 1; i < name_table.size() + 1; i++){
@@ -385,6 +386,7 @@ public class Menu {
     public void listPerson(ResultSet rs, String person){
         try {
             int i = 1;
+            
             while (rs.next()) {
                 System.out.println("\n*** "+person+" " + i + " ***");
                 System.out.println("CPF: " + rs.getString("cpf"));
@@ -401,7 +403,7 @@ public class Menu {
                 i += 1;
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            System.out.println("Erro ao coletar dados dos usuários, verifique a conexão com o banco de dados");
         }
     }
     public  void listProducts(ResultSet rs){
@@ -419,11 +421,12 @@ public class Menu {
                 i += 1;
             }
         }
-        catch(SQLException ex){ex.printStackTrace();}
+        catch(SQLException ex){System.out.println("Erro ao coletar dados dos produtos, verifique a conexão com o banco de dados");}
     }
 
     public  void listSales(ResultSet rs, int id_sale){
         try{
+
             int current = 0;
             int prev = 0;
             double total = 0.00;
@@ -473,10 +476,11 @@ public class Menu {
                 System.out.println("Forma de pagamento: "+ payment_method);
                 System.out.println("-------------------------");
             }
-        }catch(SQLException ex){ex.printStackTrace();}
+        }catch(SQLException ex){System.out.println("Erro ao coletar dados das vendas, verifique a conexão com o banco de dados");}
     }
     public  void listSupplier(ResultSet rs){
         try{
+
             int i = 1;
             while(rs.next()){
                 System.out.println("\n*** Fornecedor " + i + " ***");
@@ -493,7 +497,7 @@ public class Menu {
                 System.out.print("\n");
                 i += 1;
             }
-        }catch (SQLException ex){ex.printStackTrace();}
+        }catch (SQLException ex){System.out.println("Erro ao coletar dados dos fornecedores, verifique a conexão com o banco de dados");}
     }
     public  void editClient(PersonDAO peDAO){
         Scanner scString = new Scanner(System.in);

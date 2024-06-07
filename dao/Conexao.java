@@ -12,7 +12,7 @@ public class Conexao {
     private Connection conn;
     private Conexao(){
         this.bdUsuario = "root";
-        this.bdSenha = "2810leticia";
+        this.bdSenha = "root";
         this.bdHost = "jdbc:mysql://127.0.0.1:3306/terestore?useSSL=false";
 
         try {
@@ -21,13 +21,11 @@ public class Conexao {
 
         }
         catch (ClassNotFoundException ex){
-            ex.printStackTrace();
+            System.out.println("Erro: classe não encontrada, verifique se os drivers para conexão"+
+            " estão instalados");
         }
         catch (SQLException ex){
-            ex.printStackTrace();
-        }
-        catch (Exception ex) {
-            ex.printStackTrace();
+            System.out.println("Erro: conexão com o banco de dados, verifique sua senha e/ou usuário");
         }
     }
     public static Conexao getConexao(){
