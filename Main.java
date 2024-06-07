@@ -23,7 +23,7 @@ public class Main {
         while (!login){
             //Login do usuario ao sistema
             System.out.print("LOGIN: ");
-            String email = menu.validationString(sc);
+            String email = Validation.validationString(sc);
             System.out.print("SENHA: ");
             String senha = sc.nextLine();
             int type_menu = peDAO.login(email,senha);
