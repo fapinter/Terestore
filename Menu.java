@@ -635,7 +635,6 @@ public class Menu {
           
     }
 
-
     public  String removePerson(String person){
         Scanner sc = new Scanner(System.in);
         System.out.print("Digite o email do "+ person+": ");
