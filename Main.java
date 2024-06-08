@@ -18,12 +18,15 @@ public class Main {
         
         //Pega o valor atual do id que será utilizado como id
         //na tabela sales
-        int id_sale = saDAO.getIDsale();
         boolean login = false;
+        int id_sale = saDAO.getIDsale();
+        if (id_sale == -1){
+            login = true;
+        }
         while (!login){
             //Login do usuario ao sistema
             System.out.print("LOGIN: ");
-            String email = Validation.validateEmail(sc);
+            String email = Validation.validateEmail(sc, 1);
             System.out.print("SENHA: ");
             String senha = sc.nextLine();
             int type_menu = peDAO.login(email,senha);

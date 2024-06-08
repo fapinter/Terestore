@@ -15,8 +15,9 @@ public class Validation {
         emails.add("@yahoo.com");
         emails.add("@hotmail.com");
         emails.add("@pucpr.edu.br");
+        emails.add("@outlook.com");
     }
-    public static String validateEmail(Scanner sc) {
+    public static String validateEmail(Scanner sc, int type_validation) {
         String input = "";
         boolean valid = false;
 
@@ -28,8 +29,16 @@ public class Validation {
                     break;
                 }
             }
-            if (!valid) {
+            if (!valid && type_validation== 1) {
                 System.out.print("Por favor, insira um endereço de e-mail válido: ");
+            }
+            else if (!valid && type_validation== 2){
+                for (String email: emails){
+                    System.out.println("---------------");
+                    System.out.println(email);
+                    System.out.println("---------------");
+                }
+                System.out.print("Email não autorizado para o sistema, utilize um dos tipos de email acima: ");
             }
         }
         return input;

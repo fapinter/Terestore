@@ -84,6 +84,7 @@ public class SalesDAO {
         }
         catch (NullPointerException ex){
             System.out.println("Ponteiro retornado nulo");
+            return -1;
         }
         catch (SQLSyntaxErrorException ex){System.out.println("Erro na sintaxe MySQL, verifique o código MySQL");}
         catch(SQLException ex){System.out.println("Erro: conexão com o banco de dados, verifique sua senha e/ou usuário");}
