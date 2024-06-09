@@ -171,7 +171,7 @@ public class Validation {
         return input;
     }
 
-    
+
     public static String validateCNPJ(Scanner sc, SupplierDAO supplierDAO) {
         String input = "";
 

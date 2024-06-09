@@ -637,16 +637,26 @@ public class Menu {
         System.out.println("10. Endereco");
         System.out.println("11. Numero Do Endereço");
         System.out.print("Digite sua opção: ");
+
+        // Leitura da opção do menu
         int column = Validation.validationIntMenu(1, 11);
 
         if (column == 11) {
             System.out.print("Digite o novo número do endereço: ");
             int new_value = Validation.validationInt();
             suDAO.editSupplierInt(cnpj, new_value);
-        } else {
-            System.out.print("Digite o novo valor a ser inserido: ");
-            String newValue = Validation.validationString(scNewValue);
+        } else if (column == 1 || column == 6) {
+            System.out.print("Digite o novo CNPJ a ser inserido: ");
+            String newValue = Validation.validateStringInt(scNewValue);
             suDAO.editSupplierString(cnpj, newValue, column);
+        } else if (column == 4) {
+            System.out.print("Digite o novo Email a ser inserido: ");
+            String newValue = Validation.validateEmail(sc, 1);
+            suDAO.editSupplierString(cnpj, newValue, column);
+        } else {
+            System.out.print("Digite o novo valor: ");
+            String string = Validation.validationString(scNewValue);
+            suDAO.editSupplierString(cnpj, string, column);
         }
     }
 
