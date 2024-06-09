@@ -189,10 +189,9 @@ public class Validation {
 
     public static String validateInsertCnpj(Scanner sc, SupplierDAO supplierDAO) {
         String input = "";
-
         while (true) {
             input = sc.nextLine().trim();
-            if (!input.matches("\\d{11}")) {
+            if (!input.matches("\\d{14}")) {
                 System.out.print("CNPJ inválido. Por favor, insira apenas números com 14 dígitos: ");
             } else if (supplierDAO.CNPJExist(input)) {
                 System.out.print("Erro: CNPJ ja existe no banco de dados. Por favor, insira um CNPJ válido: ");

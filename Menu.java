@@ -660,7 +660,7 @@ public class Menu {
             System.out.print("Digite o novo Email a ser inserido: ");
             String newValue = Validation.validateEmail(sc, 1);
             suDAO.editSupplierString(cnpj, newValue, column);
-        } else if (column == 6) {
+        } else if (column == 7) {
             System.out.print("Digite um  novo numero: ");
             String string = Validation.validateCellPhone(sc);
             suDAO.editSupplierString(cnpj, string, column);
