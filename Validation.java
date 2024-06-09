@@ -155,6 +155,22 @@ public class Validation {
         }
     }
 
+    public static String validateInsertCpf(Scanner sc, PersonDAO personDAO) {
+        String input = "";
+
+        while (true) {
+            input = sc.nextLine().trim();
+            if (!input.matches("\\d{11}")) {
+                System.out.print("CPF inválido. Por favor, insira apenas números com 11 dígitos: ");
+            } else if (personDAO.CPFExist(input)) {
+                System.out.print("Erro: CPF já existe no banco de dados. Por favor, insira um CPF válido: ");
+            } else {
+                break;
+            }
+        }
+        return input;
+    }
+
     public static String validateCPF(Scanner sc, PersonDAO personDAO) {
         String input = "";
 
@@ -166,6 +182,22 @@ public class Validation {
                 break;
             } else {
                 System.out.print("Erro: CPF não existe no banco de dados. Por favor, insira um CPF válido: ");
+            }
+        }
+        return input;
+    }
+
+    public static String validateInsertCnpj(Scanner sc, SupplierDAO supplierDAO) {
+        String input = "";
+
+        while (true) {
+            input = sc.nextLine().trim();
+            if (!input.matches("\\d{11}")) {
+                System.out.print("CNPJ inválido. Por favor, insira apenas números com 14 dígitos: ");
+            } else if (supplierDAO.CNPJExist(input)) {
+                System.out.print("Erro: CNPJ ja existe no banco de dados. Por favor, insira um CNPJ válido: ");
+            } else {
+                break;
             }
         }
         return input;
@@ -183,6 +215,20 @@ public class Validation {
                 break;
             } else {
                 System.out.print("Erro: CNPJ não existe no banco de dados. Por favor, insira um CNPJ válido: ");
+            }
+        }
+        return input;
+    }
+
+    public static String validateCellPhone(Scanner sc) {
+        String input = "";
+
+        while (true) {
+            input = sc.nextLine().trim();
+            if (!input.matches("\\d{11}")) {
+                System.out.print("Numero inválido. Por favor, insira apenas números com 11 dígitos: ");
+            } else {
+                break;
             }
         }
         return input;

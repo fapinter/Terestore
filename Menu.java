@@ -183,7 +183,7 @@ public class Menu {
 
         //Fazer verificação das entradas
         System.out.print("Digite o cpf: ");
-        cpf = Validation.validateCPF(sc, personDAO);
+        cpf = Validation.validateInsertCpf(sc, personDAO);
         System.out.print("Digite o primeiro nome: ");
         first_name = Validation.validationString(sc);
         System.out.print("Digite o sobrenome: ");
@@ -195,7 +195,7 @@ public class Menu {
         System.out.print("Digite a data de nascimento (dd/MM/yyyy): ");
         birthdate = Validation.validateDate(sc);
         System.out.print("Digite o número de celular: ");
-        cellphone = Validation.validateStringInt(sc);
+        cellphone = Validation.validateCellPhone(sc);
         System.out.print("Digite a cidade: ");
         city = Validation.validationString(sc);
         System.out.print("Digite o estado: ");
@@ -361,7 +361,7 @@ public class Menu {
         int number_address;
 
         System.out.print("Digite o CNPJ: ");
-        cnpj = Validation.validateStringInt(sc);
+        cnpj = Validation.validateInsertCnpj(sc, supplierDAO);
         System.out.print("Digite o nome da empresa: ");
         companyName = Validation.validationString(sc);
         System.out.print("Digite o nome da pessoa: ");
@@ -371,7 +371,7 @@ public class Menu {
         System.out.print("Digite a senha: ");
         passwordEmail = sc.nextLine();
         System.out.print("Digite o número de celular: ");
-        phone_number = Validation.validateStringInt(sc);
+        phone_number = Validation.validateCellPhone(sc);
         System.out.print("Digite a cidade: ");
         city = Validation.validationString(sc);
         System.out.print("Digite o estado: ");
@@ -535,16 +535,19 @@ public class Menu {
             System.out.print("Digite o número do endereço: ");
             int num = Validation.validationInt();
             peDAO.editPersonInt(cpf, num, 3);
-        } else if (column == 1 || column == 3 || column == 4 || column == 7) {
+        } else if (column == 1 || column == 3 || column == 4) {
             System.out.print("Digite o novo valor: ");
             String string = Validation.validateStringInt(scString);
+            peDAO.editPersonString(cpf, string, column, 3);
+        } else if (column == 7) {
+            System.out.print("Digite um  novo numero: ");
+            String string = Validation.validateCellPhone(scString);
             peDAO.editPersonString(cpf, string, column, 3);
         } else {
             System.out.print("Digite o novo valor: ");
             String string = Validation.validationString(scString);
             peDAO.editPersonString(cpf, string, column, 3);
         }
-
     }
     public  void editOwnData(PersonDAO peDAO, String email){
         Scanner sc = new Scanner(System.in);
@@ -575,9 +578,13 @@ public class Menu {
             System.out.print("Digite o número do endereço: ");
             int num = Validation.validationInt();
             peDAO.editPersonInt(cpf, num, 3);
-        } else if (column == 1 || column == 3 || column == 4 || column == 7) {
+        } else if (column == 1 || column == 3 || column == 4) {
             System.out.print("Digite o novo valor: ");
             String string = Validation.validateStringInt(scNewValue);
+            peDAO.editPersonString(cpf, string, column, 3);
+        } else if (column == 7) {
+            System.out.print("Digite um  novo numero: ");
+            String string = Validation.validateCellPhone(sc);
             peDAO.editPersonString(cpf, string, column, 3);
         } else {
             System.out.print("Digite o novo valor: ");
@@ -645,7 +652,7 @@ public class Menu {
             System.out.print("Digite o novo número do endereço: ");
             int new_value = Validation.validationInt();
             suDAO.editSupplierInt(cnpj, new_value);
-        } else if (column == 1 || column == 6) {
+        } else if (column == 1 ) {
             System.out.print("Digite o novo CNPJ a ser inserido: ");
             String newValue = Validation.validateStringInt(scNewValue);
             suDAO.editSupplierString(cnpj, newValue, column);
@@ -653,7 +660,11 @@ public class Menu {
             System.out.print("Digite o novo Email a ser inserido: ");
             String newValue = Validation.validateEmail(sc, 1);
             suDAO.editSupplierString(cnpj, newValue, column);
-        } else {
+        } else if (column == 6) {
+            System.out.print("Digite um  novo numero: ");
+            String string = Validation.validateCellPhone(sc);
+            suDAO.editSupplierString(cnpj, string, column);
+        }  else {
             System.out.print("Digite o novo valor: ");
             String string = Validation.validationString(scNewValue);
             suDAO.editSupplierString(cnpj, string, column);
