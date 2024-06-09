@@ -169,14 +169,4 @@ public class Validation {
         }
         return input;
     }
-
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        PersonDAO personDAO = new PersonDAO();
-
-        System.out.print("Digite seu CPF: ");
-        String cpf = validateCPF(sc, personDAO);
-
-        System.out.println("CPF válido e único: " + cpf);
-    }
 }
