@@ -119,7 +119,7 @@ public class Menu {
     }
     //Menu de vendas do vendedor
     public int salesSalesman(){
-        
+
         System.out.println("\n*** MENU VENDAS ***");
         System.out.println("1. Cadastrar venda: ");
         System.out.println("2. Listar vendas: ");
@@ -131,7 +131,7 @@ public class Menu {
     }
     //Menu de fornecedor do vendedor
     public int supplierSalesman(){
-        
+
         System.out.println("\n*** MENU FORNECEDOR ***");
         System.out.println("1. Cadastrar fornecedor: ");
         System.out.println("2. Listar fornecedores: ");
@@ -151,9 +151,9 @@ public class Menu {
         String first_name;
         String email;
         String password;
-        
+
         //Fazer verificação das entradas
-        
+
         System.out.print("Digite o CPF: ");
         cpf = Validation.validateCPF(sc, personDAO);
         System.out.print("Digitie o primeiro nome: ");
@@ -162,7 +162,7 @@ public class Menu {
         email = Validation.validateEmail(sc, 2);
         System.out.print("Digite a senha: ");
         password = sc.nextLine();
-        
+
         return new Person(cpf,first_name, email, password, 1);
     }
 
@@ -206,7 +206,7 @@ public class Menu {
         address = Validation.validationString(sc);
         System.out.print("Digite o numero do endereço: ");
         number_address = Validation.validationInt();
-        
+
 
         return new Person(cpf,first_name,email,password, type_person,
         last_name,birthdate,cellphone,city,state,country,address,number_address);
@@ -216,10 +216,10 @@ public class Menu {
         Scanner scString = new Scanner(System.in);Scanner sc = new Scanner(System.in);
         String name;
         String description;
-        
+
         int quantity;
         String name_supplier;
-        
+
 
         System.out.print("Digite o nome do produto: ");
         name = Validation.validationString(scString);
@@ -231,7 +231,7 @@ public class Menu {
         quantity = Validation.validationInt();
         System.out.print("Digite o nome do fornecedor: ");
         name_supplier = Validation.validationString(scString);
-        
+
 
         return new Products(name,description,price,quantity,name_supplier);
     }
@@ -250,7 +250,7 @@ public class Menu {
         //ID and price
         Hashtable <Integer, Double> price_table = new Hashtable<Integer, Double>();
         //ID and quantity
-        Hashtable <Integer, Integer> All_products = new Hashtable<Integer,Integer>(); 
+        Hashtable <Integer, Integer> All_products = new Hashtable<Integer,Integer>();
         System.out.print("Digite o nome do cliente: ");
         name = Validation.validationString(sc);
         try{
@@ -258,7 +258,7 @@ public class Menu {
                 name_table.put(rs.getInt("id"), rs.getString("name_product"));
                 price_table.put(rs.getInt("id"), rs.getDouble("price"));
             }
-            
+
         }
         catch(SQLException ex){System.out.println("Erro ao coletar dados dos produtos, verifique a conexão com o"+
             "banco de dados");}
@@ -293,11 +293,11 @@ public class Menu {
                 break;
             case 3:
                 paymentString = "Dinheiro";
-                break;        
+                break;
 
             default:
                 System.out.println("ERRO: Opção inválida...");
-                break;    
+                break;
         }
         if(payment_method == 1){
             if(totalPrice > 1000.00){
@@ -313,10 +313,10 @@ public class Menu {
                 parcelas = Validation.validationIntMenu(0, 11);
 
                 for(Integer key : All_products.keySet()){
-                    
+
                     saDAO.insertSale(new Sales(id_sale, name, 1,
                     name_table.get(key),price_table.get(key), All_products.get(key), paymentString, parcelas),1);
-                }  
+                }
             }
             else{
                 System.out.println("-----------------------------");
@@ -328,15 +328,15 @@ public class Menu {
                 parcelas = Validation.validationIntMenu(1, 6);
 
                 for(Integer key : All_products.keySet()){
-                    
+
                     saDAO.insertSale(new Sales(id_sale, name, 1,
                     name_table.get(key),price_table.get(key), All_products.get(key), paymentString, parcelas),1);
-                }  
-            }                                      
+                }
+            }
         }
         else if(payment_method == 2 || payment_method == 3){
             for(Integer key : All_products.keySet()){
-                
+
                 saDAO.insertSale(new Sales(id_sale, name, 1,
                 name_table.get(key),price_table.get(key), All_products.get(key), paymentString),2);
             }
@@ -382,16 +382,16 @@ public class Menu {
         address = Validation.validationString(sc);
         System.out.print("Digite o número do endereço: ");
         number_address = Validation.validationInt();
-        
-        
+
+
         return new Supplier(cnpj,companyName,namePerson,email,passwordEmail,phone_number,city,state,country,address,number_address);
     }
-    
+
 
     public void listPerson(ResultSet rs, String person){
         try {
             int i = 1;
-            
+
             while (rs.next()) {
                 System.out.println("\n*** "+person+" " + i + " ***");
                 System.out.println("CPF: " + rs.getString("cpf"));
@@ -446,7 +446,7 @@ public class Menu {
                     if (started){
                         System.out.println("Total price: "+ total);
                         System.out.println("Forma de pagamento: "+ payment_method);
-                    
+
                         total = 0.00;
                         payment_method = "";
                         started = false;
@@ -584,7 +584,7 @@ public class Menu {
             String string = Validation.validationString(scNewValue);
             peDAO.editPersonString(cpf, string, column, 3);
         }
-        
+
     }
     public  void editProduct(ProductsDAO poDAO){
         Scanner sc = new Scanner(System.in);
@@ -614,7 +614,7 @@ public class Menu {
             String new_value = Validation.validationString(scNewValue);
             poDAO.editProductsString(id, new_value, column);
         }
-        
+
     }
 
 
@@ -648,21 +648,21 @@ public class Menu {
             String newValue = Validation.validationString(scNewValue);
             suDAO.editSupplierString(cnpj, newValue, column);
         }
-          
+
     }
 
     public  String removePerson(String person){
         Scanner sc = new Scanner(System.in);
         System.out.print("Digite o email do "+ person+": ");
         String email = Validation.validateEmail(sc, 1);
-        
+
         return email;
     }
     public  void removeProduct(ProductsDAO poDAO){
         Scanner sc = new Scanner(System.in);
         System.out.print("Digite o id do produto para remover: ");
         int id_remove = Validation.validationInt();
-        
+
         poDAO.removeProduct(id_remove);
     }
 
@@ -670,7 +670,7 @@ public class Menu {
         Scanner sc = new Scanner(System.in);
         System.out.print("Digite o CNPJ do fornecedor que deseja remover: ");
         String cnpj = Validation.validateCNPJ(sc,supplierDAO);
-        
+
         suDAO.removeSupplier(cnpj);
     }
     public  void fechamentoDoDia(Scanner ScannerDate, SalesDAO saDAO){
@@ -684,7 +684,7 @@ public class Menu {
             while (rs.next()) {
                 totalMoney += rs.getDouble("total_price");
             }
-        } 
+        }
         catch (SQLException ex) {
             System.out.print("Entrada incorreta de Data");
         }
