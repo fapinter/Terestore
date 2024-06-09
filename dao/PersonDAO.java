@@ -39,7 +39,6 @@ public class PersonDAO {
             this.ps.setString(3,p.getEmail());
             this.ps.setString(4, p.getPassword_email());
             this.ps.setInt(5, p.getType_person());
-            System.out.println("rodou aqui");
             this.ps.executeUpdate();
             this.ps.close();
         }
@@ -97,25 +96,37 @@ public class PersonDAO {
         catch(SQLException ex){System.out.println("Erro: conexão com o banco de dados, verifique sua senha e/ou usuário");}
     }
 
-    public int login(String email, String senha){
+    public int login(String email, String senha) {
         int type_person = 0;
-        this.query = "SELECT * FROM person WHERE BINARY email  = ? AND BINARY password_email  = ?";
-        try{
+        this.query = "SELECT * FROM person WHERE BINARY email = ? AND BINARY password_email = ?";
+        try {
             this.ps = conexao.getConnection().prepareStatement(this.query);
-            this.ps.setString(1,email);
-            this.ps.setString(2,senha);
+            this.ps.setString(1, email);
+            this.ps.setString(2, senha);
             this.rs = this.ps.executeQuery();
 
-            if ( !this.rs.next()){System.out.println("Login ou senha incorretos");}
-
-            else{type_person = rs.getInt("type_person");}
-        }
-        catch (SQLSyntaxErrorException ex){System.out.println("Erro na sintaxe MySQL, verifique o código MySQL");}
-        catch(SQLException ex){
+            if (!this.rs.next()) {
+                return type_person;
+            } else {
+                type_person = rs.getInt("type_person");
+            }
+        } catch (SQLSyntaxErrorException ex) {
+            System.out.println("Erro na sintaxe MySQL, verifique o código MySQL");
+        } catch (SQLException ex) {
             System.out.println("Erro: conexão com o banco de dados, verifique sua senha e/ou usuário");
+        } finally {
+            // Fechar recursos corretamente
+            try {
+                if (this.rs != null) this.rs.close();
+                if (this.ps != null) this.ps.close();
+            } catch (SQLException ex) {
+                System.out.println("Erro ao fechar os recursos: " + ex.getMessage());
+            }
         }
         return type_person;
     }
+
+
     public String getCPF(String email){
         String cpf = "";
         this.query = "SELECT cpf FROM person WHERE BINARY email=? AND type_person = 2";
