@@ -623,7 +623,7 @@ public class Menu {
         Scanner scNewValue = new Scanner(System.in);
 
         System.out.print("Digite o CNPJ do fornecedor para editar: ");
-        String cnpj = Validation.validateCNPJ(sc,supplierDAO);
+        String cnpj = Validation.validateCNPJ(sc, suDAO);
         System.out.println("*** QUAL DADO DESEJA EDITAR");
         System.out.println("1. CNPJ: ");
         System.out.println("2. Nome Da Empresa");
@@ -648,7 +648,6 @@ public class Menu {
             String newValue = Validation.validationString(scNewValue);
             suDAO.editSupplierString(cnpj, newValue, column);
         }
-
     }
 
     public  String removePerson(String person){

@@ -163,13 +163,14 @@ public class Validation {
             if (!input.matches("\\d{11}")) {
                 System.out.print("CPF inválido. Por favor, insira apenas números com 11 dígitos: ");
             } else if (personDAO.CPFExist(input)) {
-                System.out.print("Erro: CPF já existe no banco de dados. Por favor, insira um CPF diferente: ");
-            } else {
                 break;
+            } else {
+                System.out.print("Erro: CPF não existe no banco de dados. Por favor, insira um CPF válido: ");
             }
         }
         return input;
     }
+
     public static String validateCNPJ(Scanner sc, SupplierDAO supplierDAO) {
         String input = "";
 
@@ -178,9 +179,9 @@ public class Validation {
             if (!input.matches("\\d{14}")) {
                 System.out.print("CNPJ inválido. Por favor, insira apenas números com 14 dígitos: ");
             } else if (supplierDAO.CNPJExist(input)) {
-                System.out.print("Erro: CNPJ já existe no banco de dados. Por favor, insira um CNPJ diferente: ");
-            } else {
                 break;
+            } else {
+                System.out.print("Erro: CNPJ não existe no banco de dados. Por favor, insira um CNPJ válido: ");
             }
         }
         return input;

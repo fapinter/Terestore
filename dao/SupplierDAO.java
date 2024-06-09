@@ -6,9 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import model.Supplier;
-
-
 public class SupplierDAO {
+
     private Conexao conexao;
     private String query;
     private PreparedStatement ps;
@@ -17,7 +16,7 @@ public class SupplierDAO {
     public SupplierDAO(){conexao = Conexao.getConexao();}
 
     public boolean CNPJExist(String cnpj) {
-        this.query = "SELECT cnpj FROM supplier WHERE cpf = ?";
+        this.query = "SELECT cnpj FROM supplier WHERE cnpj = ?";
         try {
             this.ps = conexao.getConnection().prepareStatement(this.query);
             this.ps.setString(1, cnpj);
