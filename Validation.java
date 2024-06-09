@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import dao.PersonDAO;
 
 public class Validation {
 
@@ -17,23 +18,27 @@ public class Validation {
         emails.add("@pucpr.edu.br");
         emails.add("@outlook.com");
     }
+
     public static String validateEmail(Scanner sc, int type_validation) {
         String input = "";
         boolean valid = false;
 
         while (!valid) {
             input = sc.nextLine().trim();
-            for (String email : emails) {
-                if (input.endsWith(email)) {
-                    valid = true;
-                    break;
+
+            if (input.matches(".+@.+\\..+")) {
+                for (String email : emails) {
+                    if (input.endsWith(email)) {
+                        valid = true;
+                        break;
+                    }
                 }
             }
-            if (!valid && type_validation== 1) {
+
+            if (!valid && type_validation == 1) {
                 System.out.print("Por favor, insira um endereço de e-mail válido: ");
-            }
-            else if (!valid && type_validation== 2){
-                for (String email: emails){
+            } else if (!valid && type_validation == 2) {
+                for (String email : emails) {
                     System.out.println("---------------");
                     System.out.println(email);
                     System.out.println("---------------");
@@ -57,9 +62,8 @@ public class Validation {
                 } else {
                     System.out.print("Opção inválida. Por favor, insira um número entre " + min + " e " + max + ".");
                 }
-            }
-            catch (InputMismatchException e) {
-                System.out.print("Entrada inválida. Por favor, insira um número inteiro entre "+min+"e"+max+": ");
+            } catch (InputMismatchException e) {
+                System.out.print("Entrada inválida. Por favor, insira um número inteiro entre " + min + " e " + max + ": ");
                 sc.next();
             }
         }
@@ -76,8 +80,7 @@ public class Validation {
             try {
                 option = sc.nextInt();
                 valid = true;
-            }
-            catch (InputMismatchException e) {
+            } catch (InputMismatchException e) {
                 System.out.print("Entrada inválida. Por favor, insira um número inteiro: ");
                 sc.next();
             }
@@ -86,21 +89,18 @@ public class Validation {
         return option;
     }
 
-
-
     public static String validationString(Scanner sc) {
         String input = "";
 
         while (input.isEmpty() || !input.matches("[\\p{L}\\s@._-]+")) {
             input = sc.nextLine();
             if (!input.matches("[\\p{L}\\s@*._-]+")) {
-                System.out.print("Entrada inválida. Por favor, insira apenas letras, espaços: ");
+                System.out.print("Entrada inválida. Por favor, insira apenas letras e espaços: ");
             }
         }
 
         return input;
     }
-
 
     public static double validationDouble(Scanner sc) {
         double value = 0.0;
@@ -130,6 +130,7 @@ public class Validation {
         }
         return input;
     }
+
     public static String validateDate(Scanner sc) {
         String input = "";
         Pattern pattern = Pattern.compile("^\\d{2}/\\d{2}/\\d{4}$");
@@ -151,5 +152,31 @@ public class Validation {
                 System.out.print("Entrada inválida. Por favor, insira uma data no formato dd/MM/yyyy: ");
             }
         }
+    }
+
+    public static String validateCPF(Scanner sc, PersonDAO personDAO) {
+        String input = "";
+
+        while (true) {
+            input = sc.nextLine().trim();
+            if (!input.matches("\\d{11}")) {
+                System.out.print("CPF inválido. Por favor, insira um CPF com 11 dígitos: ");
+            } else if (personDAO.CPFExist(input)) {
+                System.out.print("Erro: CPF já existe no banco de dados. Por favor, insira um CPF diferente: ");
+            } else {
+                break;
+            }
+        }
+        return input;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        PersonDAO personDAO = new PersonDAO();
+
+        System.out.print("Digite seu CPF: ");
+        String cpf = validateCPF(sc, personDAO);
+
+        System.out.println("CPF válido e único: " + cpf);
     }
 }

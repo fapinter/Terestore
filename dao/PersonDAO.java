@@ -15,6 +15,21 @@ public class PersonDAO {
 
     public PersonDAO(){conexao = Conexao.getConexao();}
 
+    public boolean CPFExist(String cpf) {
+        this.query = "SELECT cpf FROM person WHERE cpf = ?";
+        try {
+            this.ps = conexao.getConnection().prepareStatement(this.query);
+            this.ps.setString(1, cpf);
+            this.rs = this.ps.executeQuery();
+            boolean exists = rs.next();
+            this.ps.close();
+            return exists;
+        } catch (SQLException ex) {
+            System.out.println("Erro: conexão com o banco de dados, verifique sua senha e/ou usuário");
+            return false;
+        }
+    }
+
     public void insertAdmin(Person p){
         this.query = "INSERT INTO person(cpf, first_name, email, password_email, type_person, register_date) VALUES (?,?,?,?,?, CURDATE())";
         try{

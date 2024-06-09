@@ -2,7 +2,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Hashtable;
 import java.util.Scanner;
-import java.util.InputMismatchException;
 
 import dao.PersonDAO;
 import dao.ProductsDAO;
@@ -14,6 +13,8 @@ import model.Sales;
 import model.Supplier;
 
 public class Menu {
+
+    PersonDAO personDAO = new PersonDAO();
     //Menu principal, ambos admin e vendedor o utilizam
     public int FirstMenu(){
             System.out.println("1. Pessoas: ");
@@ -150,7 +151,7 @@ public class Menu {
         //Fazer verificação das entradas
         
         System.out.print("Digite o CPF: ");
-        cpf = Validation.validateStringInt(sc);
+        cpf = Validation.validateCPF(sc, personDAO);
         System.out.print("Digitie o primeiro nome: ");
         first_name = Validation.validationString(sc);
         System.out.print("Digite o email: ");
@@ -178,7 +179,7 @@ public class Menu {
 
         //Fazer verificação das entradas
         System.out.print("Digite o cpf: ");
-        cpf = Validation.validateStringInt(sc);
+        cpf = Validation.validateCPF(sc, personDAO);
         System.out.print("Digite o primeiro nome: ");
         first_name = Validation.validationString(sc);
         System.out.print("Digite o sobrenome: ");
