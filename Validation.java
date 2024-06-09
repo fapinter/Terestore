@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import dao.PersonDAO;
+import dao.SupplierDAO;
 
 public class Validation {
 
@@ -160,7 +161,7 @@ public class Validation {
         while (true) {
             input = sc.nextLine().trim();
             if (!input.matches("\\d{11}")) {
-                System.out.print("CPF inválido. Por favor, insira um CPF com 11 dígitos: ");
+                System.out.print("CPF inválido. Por favor, insira apenas números com 11 dígitos: ");
             } else if (personDAO.CPFExist(input)) {
                 System.out.print("Erro: CPF já existe no banco de dados. Por favor, insira um CPF diferente: ");
             } else {
@@ -169,4 +170,20 @@ public class Validation {
         }
         return input;
     }
+    public static String validateCNPJ(Scanner sc, SupplierDAO supplierDAO) {
+        String input = "";
+
+        while (true) {
+            input = sc.nextLine().trim();
+            if (!input.matches("\\d{14}")) {
+                System.out.print("CNPJ inválido. Por favor, insira apenas números com 14 dígitos: ");
+            } else if (supplierDAO.CNPJExist(input)) {
+                System.out.print("Erro: CNPJ já existe no banco de dados. Por favor, insira um CNPJ diferente: ");
+            } else {
+                break;
+            }
+        }
+        return input;
+    }
+
 }

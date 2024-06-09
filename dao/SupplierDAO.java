@@ -16,6 +16,21 @@ public class SupplierDAO {
 
     public SupplierDAO(){conexao = Conexao.getConexao();}
 
+    public boolean CNPJExist(String cnpj) {
+        this.query = "SELECT cnpj FROM supplier WHERE cpf = ?";
+        try {
+            this.ps = conexao.getConnection().prepareStatement(this.query);
+            this.ps.setString(1, cnpj);
+            this.rs = this.ps.executeQuery();
+            boolean exists = rs.next();
+            this.ps.close();
+            return exists;
+        } catch (SQLException ex) {
+            System.out.println("Erro: conexão com o banco de dados, verifique sua senha e/ou usuário");
+            return false;
+        }
+    }
+
     public void insertSupplier(Supplier sp){
         this.query = "INSERT INTO supplier VALUES(?,?,?,?,?,?,?,?,?,?,?, CURDATE())";
 

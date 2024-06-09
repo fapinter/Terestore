@@ -12,9 +12,13 @@ import model.Products;
 import model.Sales;
 import model.Supplier;
 
+import javax.swing.*;
+
 public class Menu {
 
     PersonDAO personDAO = new PersonDAO();
+    SupplierDAO supplierDAO = new SupplierDAO();
+
     //Menu principal, ambos admin e vendedor o utilizam
     public int FirstMenu(){
             System.out.println("1. Pessoas: ");
@@ -506,7 +510,7 @@ public class Menu {
         Scanner scDate = new Scanner(System.in);
 
         System.out.print("Digite o CPF do Cliente para editá-lo: ");
-        String cpf = scString.nextLine();
+        String cpf = Validation.validateCPF(scInt, personDAO);
         System.out.println("*** QUAL DADO DESEJA EDITAR");
         System.out.println("1. CPF: ");
         System.out.println("2. Primeiro nome");
@@ -523,17 +527,21 @@ public class Menu {
         System.out.print("Digite sua opção: ");
         int column = Validation.validationIntMenu(1, 12);
 
-        if (column == 6){
+        if (column == 6) {
             System.out.print("Digite a data no modelo YYYY-MM-DD: ");
-            String date =  Validation.validateDate(scDate);
+            String date = Validation.validateDate(scDate);
             peDAO.editPersonDate(cpf, date, 3);
-        } else if (column == 12){
+        } else if (column == 12) {
             System.out.print("Digite o número do endereço: ");
             int num = Validation.validationInt();
             peDAO.editPersonInt(cpf, num, 3);
-        } else{
+        } else if (column == 1 || column == 3 || column == 4 || column == 7) {
             System.out.print("Digite o novo valor: ");
             String string = Validation.validateStringInt(scString);
+            peDAO.editPersonString(cpf, string, column, 3);
+        } else {
+            System.out.print("Digite o novo valor: ");
+            String string = Validation.validationString(scString);
             peDAO.editPersonString(cpf, string, column, 3);
         }
 
@@ -558,19 +566,23 @@ public class Menu {
         System.out.println("12. Número do endereço");
         System.out.print("Digite sua opção: ");
         int column = Validation.validationIntMenu(1, 12);
-        
-        if (column == 6){
+
+        if (column == 6) {
             System.out.print("Digite a data no modelo YYYY-MM-DD: ");
-            String date =  Validation.validateDate(sc);
-            peDAO.editPersonDate(cpf, date, 2);
-        } else if (column == 12){
+            String date = Validation.validateDate(sc);
+            peDAO.editPersonDate(cpf, date, 3);
+        } else if (column == 12) {
             System.out.print("Digite o número do endereço: ");
             int num = Validation.validationInt();
-            peDAO.editPersonInt(cpf, num, 2);
-        } else{
+            peDAO.editPersonInt(cpf, num, 3);
+        } else if (column == 1 || column == 3 || column == 4 || column == 7) {
             System.out.print("Digite o novo valor: ");
             String string = Validation.validateStringInt(scNewValue);
-            peDAO.editPersonString(cpf, string, column, 2);
+            peDAO.editPersonString(cpf, string, column, 3);
+        } else {
+            System.out.print("Digite o novo valor: ");
+            String string = Validation.validationString(scNewValue);
+            peDAO.editPersonString(cpf, string, column, 3);
         }
         
     }
@@ -588,20 +600,19 @@ public class Menu {
         System.out.println("5. Nome do fornecedor: ");
         System.out.print("Digite sua opção: ");
         int column = Validation.validationIntMenu(1, 5);
-        if(column == 3){
+
+        if (column == 3) {
             System.out.print("Digite o novo preço: ");
             double new_value = Validation.validationDouble(scNewValue);
             poDAO.editProductsDouble(new_value, id);
-        }
-        else if(column == 4){
+        } else if (column == 4) {
             System.out.print("Digite a nova quantidade: ");
             int new_value = Validation.validationInt();
             poDAO.editProductsInt(new_value, id);
-        }
-        else{
+        } else {
             System.out.print("Digite o novo valor: ");
-            String new_value = Validation.validateStringInt(scNewValue);
-            poDAO.editProductsString(id,new_value,column);
+            String new_value = Validation.validationString(scNewValue);
+            poDAO.editProductsString(id, new_value, column);
         }
         
     }
@@ -612,7 +623,7 @@ public class Menu {
         Scanner scNewValue = new Scanner(System.in);
 
         System.out.print("Digite o CNPJ do fornecedor para editar: ");
-        String cnpj = sc.nextLine();
+        String cnpj = Validation.validateCNPJ(sc,supplierDAO);
         System.out.println("*** QUAL DADO DESEJA EDITAR");
         System.out.println("1. CNPJ: ");
         System.out.println("2. Nome Da Empresa");
@@ -627,15 +638,15 @@ public class Menu {
         System.out.println("11. Numero Do Endereço");
         System.out.print("Digite sua opção: ");
         int column = Validation.validationIntMenu(1, 11);
+
         if (column == 11) {
-            System.out.print("Digite o novo Numero Do Endereço: ");
+            System.out.print("Digite o novo número do endereço: ");
             int new_value = Validation.validationInt();
             suDAO.editSupplierInt(cnpj, new_value);
-        }
-        else{
-            System.out.println("Digite o novo valor a ser inserido");
-            String newValue = Validation.validateStringInt(scNewValue);
-            suDAO.editSupplierString(cnpj,newValue,column);
+        } else {
+            System.out.print("Digite o novo valor a ser inserido: ");
+            String newValue = Validation.validationString(scNewValue);
+            suDAO.editSupplierString(cnpj, newValue, column);
         }
           
     }
@@ -658,7 +669,7 @@ public class Menu {
     public   void removeSupplier(SupplierDAO suDAO) {
         Scanner sc = new Scanner(System.in);
         System.out.print("Digite o CNPJ do fornecedor que deseja remover: ");
-        String cnpj = Validation.validateStringInt(sc);
+        String cnpj = Validation.validateCNPJ(sc,supplierDAO);
         
         suDAO.removeSupplier(cnpj);
     }
